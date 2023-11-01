@@ -31,7 +31,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!token);
 
   async function signIn(data) {
-
     const result = loginService.loginPost(data)
       .then(response => {
 
@@ -61,7 +60,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   useEffect(() => {
-
     const expirationDate: any = Cookies.get("expirationDateTimeAccessToken")
 
     const timeDiference = new Date(expirationDate).getTime() - new Date().getTime()
@@ -76,7 +74,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         navigate("/login")
       }
     }, timeDiference);
-
   }, [])
 
   return (
