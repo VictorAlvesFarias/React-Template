@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import {Link } from 'react-router-dom'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { AuthContext } from '../context/AuthContext'
-import Loading from '../components/Loading'
 import { zodResolver } from "@hookform/resolvers/zod"
-import Input from '../components/Input'
-import InputRoot from '../components/InputRoot'
+import InputDefault from '../styled-components/InputDefault'
+import ButtonDefault from '../styled-components/ButtonDefault'
+import Form from '../containers/Form'
 
 function Login() {
 
@@ -47,23 +47,14 @@ function Login() {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Entre na sua conta
             </h1>
-            <form onSubmit={handleSubmit(handleSingIn)} className="space-y-4 md:space-y-6" action="#">
-              <InputRoot label={"E-Mail"} error={errors.email}>
-                <Input register={register('email')} />
-              </InputRoot>
-              <InputRoot label={"Senha"} error={errors.password}>
-                <Input register={register('password')} />
-              </InputRoot>
-              <div className="h-20 flex justify-center items-center">
-                {loginLoading ?
-                  <Loading visible={true} className={"w-10 h-10"}></Loading> :
-                  <button type="submit" className="w-full bg-purple-600 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Entrar</button>
-                }
-              </div>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                <Link to="/signup" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Cadastre-se</Link>
-              </p>
-            </form>
+            <Form submit={handleSubmit(handleSingIn)}>
+                <InputDefault register={register('email')} errors={errors.email} label={'E-mail'}/>
+                <InputDefault register={register('password')} errors={errors.password} label={'Senha'}/>
+                <ButtonDefault loading={loginLoading} >Entrar</ButtonDefault>
+                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                  <Link to="/signup" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Cadastre-se</Link>
+                </p>
+            </Form>
           </div>
         </div>
       </div>
