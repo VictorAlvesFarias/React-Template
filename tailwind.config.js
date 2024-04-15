@@ -4,8 +4,16 @@ export default {
     "./*.{js,ts,jsx,tsx,html}",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  plugins:[
+  ],
   theme: {
-    extend: {},
+    extend: {
+    },
   },
-  plugins: [],
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    ".*Styles.*" // Add ".*Styles.*" (or whatever matches your naming scheme)
+  ]
 }
