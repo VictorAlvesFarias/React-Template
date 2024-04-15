@@ -1,36 +1,52 @@
 import React, { useEffect, useState } from 'react'
 
-function Modal({ isOpen, children, timer, setClose }:any) {
+interface ModalContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+    timer: number,
+    open: boolean,
+    callback: () => {}
+}
+
+interface ModalProps extends Omit<ModalContainerProps,"className"> {
+    variation: keyof typeof modalVariations;
+}
+
+const modalVariations = {
+    default: (_: ModalProps) => <ModalContainer {..._}  className=''/>
+}
+
+function ModalContainer(_: ModalContainerProps) {
 
     const [style, setStyle] = useState("opacity-0")
-
     const [opened, setOpened] = useState(false)
 
-    function handleOpen() {
+    const handleOpen = () => {
         setOpened(true)
         setTimeout(() => {
             setStyle("opacity-100")
-        }, timer);
+        }, _.timer);
     }
-
-    function handleClose() {
+    const handleClose = () => {
         setStyle("opacity-0")
         setTimeout(() => {
-            setClose()
             setOpened(false)
-        }, timer);
+        }, _.timer);
     }
 
     useEffect(() => {
-        isOpen ? handleOpen() : handleClose() 
-    }, [isOpen])
+        _.open ? handleOpen() : handleClose()
+    }, [_.open])
 
     return (
         opened &&
-        <div className={'p-5 z-50 w-full top-0 flex items-center justify-center left-0 bg-opacity-55 h-screen fixed bg-black transition-all '+style + ` duration-[${timer}]`}>
-            {children}
+        <div className={_.className+' z-50 w-full top-0 flex items-center justify-center left-0 h-screen fixed  transition-all ' + style + ` duration-[${_.timer}]`}>
+            {_.children}
         </div>
     )
+}
+
+function Modal(props: ModalProps) {
+    const Component = modalVariations[props.variation] || modalVariations.default;
+    return <Component {...props} />;
 }
 
 export default Modal

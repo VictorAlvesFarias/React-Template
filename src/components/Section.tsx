@@ -1,11 +1,28 @@
 import React from 'react'
 
-function Section(props:any) {
+interface SectionContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+}
+
+interface SectionProps extends Omit<SectionContainerProps,"className"> {
+  variation: keyof typeof sectionVariations;
+}
+
+const sectionVariations = {
+  default:(_:SectionContainerProps) => 
+    <SectionContainer {..._} className='max-w-7xl w-11/12 h-full lg:px-0 px-5 items-center justify-center flex flex-col y-20'/>,
+}
+
+function SectionContainer(_:SectionContainerProps) {
   return (
-    <section className="items-center w-full justify-center flex flex-col mb-40  "> 
-        {props.children}
-    </section>
+    <div {..._}>
+          {_.children}
+    </div>
   )
+}
+
+function Section(props:SectionProps) {
+  const Component = sectionVariations[props.variation] || sectionVariations.default;
+  return <Component {...props} />;
 }
 
 export default Section
