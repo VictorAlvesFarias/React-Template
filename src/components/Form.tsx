@@ -9,13 +9,13 @@ interface FormProps extends Omit<FormContainerProps, "className"> {
 }
 
 const formsVariation = {
-    default:(_:FormProps)=>
-    <FormContainer {..._} className='space-y-4 md:space-y-6'/>
+    default: (_: FormProps) =>
+        <FormContainer {..._} className='space-y-4 md:space-y-6' />
 }
 
-function FormContainer(_:FormContainerProps) {
+function FormContainer(_: FormContainerProps) {
     return (
-        <form {..._}/>
+        <form {..._} />
     )
 }
 
@@ -24,4 +24,6 @@ function Form(props: FormProps) {
     return <Component {...props} />;
 }
 
-export default Form
+export {
+    Form
+}

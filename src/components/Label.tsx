@@ -12,15 +12,17 @@ const labelVariations = {
     <LabelContainer {...props} className='mb-1 font-semibold px-1' />,
 }
 
-function LabelContainer(_:LabelContainerProps) {
+function LabelContainer(_: LabelContainerProps) {
   return (
     <label {..._} />
   )
 }
 
-function Label( props : LabelProps) {
+function Label(props: LabelProps) {
   const Component = labelVariations[props.variation] || labelVariations.default;
   return <Component {...props} />;
 }
 
-export default Label
+export {
+  Label
+}

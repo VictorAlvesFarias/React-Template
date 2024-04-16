@@ -29,4 +29,6 @@ function Textarea( props : TextareaProps) {
   return <Component {...props} />;
 }
 
-export default Textarea
+export {
+  Textarea
+}

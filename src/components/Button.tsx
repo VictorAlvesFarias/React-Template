@@ -5,7 +5,7 @@ interface ButtonContainerProps extends React.ButtonHTMLAttributes<HTMLButtonElem
   loadingComponent?: React.ReactNode;
 }
 
-interface ButtonProps extends Omit<ButtonContainerProps,"className">  {
+interface ButtonProps extends Omit<ButtonContainerProps, "className"> {
   variation: keyof typeof buttonVariations;
 }
 
@@ -26,10 +26,12 @@ function ButtonContainer(_: ButtonContainerProps) {
   );
 }
 
-function Button( props : ButtonProps) {
+function Button(props: ButtonProps) {
   const Component = buttonVariations[props.variation] || buttonVariations.default;
   return <Component {...props} />;
 }
 
-export default Button;
-export { ButtonProps, Button };
+export {
+  ButtonProps,
+  Button
+};
