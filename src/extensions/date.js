@@ -13,7 +13,6 @@ export function dateValidator(data) {
 
 export function dateFormat(data) {
   var dateParts = data.split("-");
-
   var date = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
 
   return date

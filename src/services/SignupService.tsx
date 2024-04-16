@@ -1,14 +1,15 @@
 
 import axios from 'axios';
 import { registerUserUrl } from './api';
+import { SignupForm } from '../interfaces/data/SignupForm';
 
 export class SignupService {
-  async signupPost({ email, password, passwordConfirm }) {
+  async signupPost(_: SignupForm) {
     const result = axios.post(registerUserUrl,
       {
-        username: email,
-        password: password,
-        confirmPassword: passwordConfirm
+        username: _.email,
+        password: _.password,
+        confirmPassword: _.passwordConfirm
       }
     )
       .then(response => {

@@ -15,15 +15,17 @@ const spanVariations = {
     <SpanContainer {...props} className='text-red-400' />,
 }
 
-function SpanContainer(_:SpanContainerProps) {
+function SpanContainer(_: SpanContainerProps) {
   return (
-    <span {..._}/>
+    <span {..._} />
   )
 }
 
-function Span( props : SpanProps) {
+function Span(props: SpanProps) {
   const Component = spanVariations[props.variation] || spanVariations.default;
   return <Component {...props} />;
 }
 
-export default Span
+export {
+  Span
+}

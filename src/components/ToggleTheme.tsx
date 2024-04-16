@@ -7,7 +7,7 @@ interface ToogleThemeContainerProps extends React.HTMLAttributes<HTMLDivElement>
   callback: () => {}
 }
 
-interface ToogleThemeProps extends Omit<ToogleThemeContainerProps,"activateIcon"|"desactivateIcon"> {
+interface ToogleThemeProps extends Omit<ToogleThemeContainerProps, "activateIcon" | "desactivateIcon"> {
   variation: keyof typeof ToogleThemeVariations;
 }
 
@@ -31,7 +31,7 @@ function ToogleThemeContainer(_: ToogleThemeContainerProps) {
 
   return (
     <button className={_.className} onClick={handleToggle} >
-      <div style={{ width: isDarkmode ? "0%" : "50%" }} className="first-line:transition duration-500"/>
+      <div style={{ width: isDarkmode ? "0%" : "50%" }} className="first-line:transition duration-500" />
       {isDarkmode ? _.desactivateIcon : _.activateIcon}
     </button>
   );
@@ -42,4 +42,6 @@ function ToogleTheme(props: ToogleThemeProps) {
   return <Component {...props} />;
 }
 
-export default ToogleTheme
+export {
+  ToogleTheme
+}

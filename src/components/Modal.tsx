@@ -49,4 +49,6 @@ function Modal(props: ModalProps) {
     return <Component {...props} />;
 }
 
-export default Modal
+export {
+    Modal
+}
