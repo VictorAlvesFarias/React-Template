@@ -4,7 +4,9 @@ import { useForm } from 'react-hook-form'
 import { AuthContext } from '../context/AuthContext'
 import { zodResolver } from "@hookform/resolvers/zod"
 import Input from '../components/Input'
-import Dropdown from '../components/Dropdown'
+import { Button } from '../components/Button'
+import { Form } from '../components/Form'
+import { Span } from '../components/Span'
 
 function Login() {
   const [loginLoading, setLoginLoding] = useState(false)
@@ -32,18 +34,16 @@ function Login() {
 
   return (
     <section className=" h-screen w-96 item">
-      <Input.Root variation='default'>
-        <Input.Label variation='default'>Teste</Input.Label>
-        <Dropdown.Root
-          register={register("email")}
-          setValue={setValue}
-          variation='default'
-        >
-          <Dropdown.Menu>
-            <Dropdown.Option variation={'default'}value='' label='12345'/>
-          </Dropdown.Menu>
-        </Dropdown.Root>
-      </Input.Root>
+      <Form onSubmit={handleSubmit(handleSingIn)}>
+        <Input.Root>
+          <Input.Label >Teste</Input.Label>
+          <Input.Text mask={[/(\d{2})(\d{4,5})(\d{4})/,'($1) $2-$3']} register={register('email')} />
+          <Span variation='error'>{errors.email?.message}</Span>
+        </Input.Root>
+        <Button>
+          Teste
+        </Button>
+      </Form>
 
     </section>
   )

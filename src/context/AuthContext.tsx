@@ -11,13 +11,13 @@ import { BaseResponseApi } from '../interfaces/shared/BaseResponseApi';
 import { AuthContextType } from '../interfaces/shared/AuthContextType';
 import { LoginForm } from '../interfaces/data/LoginForm';
 
-export const AuthContext = createContext<AuthContextType>({
+const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   signIn: () => Promise.resolve(),
   logout: () => { }
 });
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const token = Cookies.get('jwtApplicationToken');
   const loginService = new LoginService()
@@ -67,3 +67,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     <AuthContext.Provider value={authContext} children={children} />
   );
 };
+
+export {
+  AuthContext,
+  AuthProvider
+}
