@@ -1,30 +1,33 @@
 import React from 'react'
 import { UseFormRegister, UseFormRegisterReturn } from 'react-hook-form';
 
-interface TextareaContainerProps extends Omit<React.ButtonHTMLAttributes<HTMLTextAreaElement>,"children">  {
-  register?: UseFormRegisterReturn
+interface TextareaContainerProps  {
+  register?: UseFormRegisterReturn,
+  className?:string
 }
 
-interface TextareaProps extends Omit<TextareaContainerProps,"className"> {
+interface TextareaVariation extends Omit<TextareaContainerProps,"className"> {
+
+}
+
+interface TextareaComponent extends TextareaVariation {
   variation: keyof typeof TextareaVariations;
 }
 
 const TextareaVariations = {
-  default: (_:TextareaProps) => 
-    <TextareaContainer {..._} className = "rounded border border-black text-black indent-1 p-1"/>,
-  password: (_:TextareaProps) => 
-    <TextareaContainer {..._} className = "rounded border border-black text-black indent-1 p-1"/>
+  default: (props:TextareaVariation) => 
+    <TextareaContainer register={props.register} className = "rounded border border-black text-black indent-1 p-1"/>,
+  password: (props:TextareaVariation) => 
+    <TextareaContainer register={props.register}  className = "rounded border border-black text-black indent-1 p-1"/>
 }
 
-function TextareaContainer( _: TextareaContainerProps ) {
-  const register = {..._.register}
-  const props= {..._,register:null}
+function TextareaContainer(props: TextareaContainerProps) {
   return (
-    <textarea {...props}  {...register} />
+    <textarea className={props.className}  {...props.register} />
   )
 }
 
-function Textarea( props : TextareaProps) {
+function Textarea( props : TextareaComponent) {
   const Component = TextareaVariations[props.variation] || TextareaVariations.default;
   return <Component {...props} />;
 }

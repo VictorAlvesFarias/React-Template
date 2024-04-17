@@ -1,25 +1,30 @@
 import React from 'react'
 
-interface FormContainerProps extends React.HTMLAttributes<HTMLFormElement> {
+interface FormContainerProps {
+    className: string
+    onSubmit: () => {}
+}
+
+interface FormVariation extends Omit<FormContainerProps, "className"> {
 
 }
 
-interface FormProps extends Omit<FormContainerProps, "className"> {
+interface FormComponent extends FormVariation {
     variation: keyof typeof formsVariation;
 }
 
 const formsVariation = {
-    default: (_: FormProps) =>
-        <FormContainer {..._} className='space-y-4 md:space-y-6' />
+    default: (props: FormVariation) =>
+        <FormContainer {...props} className='space-y-4 md:space-y-6' />
 }
 
-function FormContainer(_: FormContainerProps) {
+function FormContainer(props: FormContainerProps) {
     return (
-        <form {..._} />
+        <form className={props.className} onSubmit={props.onSubmit} />
     )
 }
 
-function Form(props: FormProps) {
+function Form(props: FormComponent) {
     const Component = formsVariation[props.variation] || formsVariation.default;
     return <Component {...props} />;
 }
