@@ -10,16 +10,12 @@ interface ButtonVariation extends Omit<ButtonContainerProps, "className"> {
 }
 
 interface ButtonComponent extends ButtonVariation {
-  variation: keyof typeof buttonVariations;
+  variation?: keyof typeof buttonVariations;
 }
 
 const buttonVariations = {
-  green: (props: ButtonVariation) =>
-    <ButtonContainer {...props} className='bg-green-500' />,
-  red: (props: ButtonVariation) =>
-    <ButtonContainer {...props} className='bg-red-500' />,
   default: (props: ButtonVariation) =>
-    <ButtonContainer {...props} className='bg-red-500' />,
+    <ButtonContainer {...props} className='bg-red-500 w-full rounded p-1' />,
 }
 
 function ButtonContainer(_: ButtonContainerProps) {
@@ -31,11 +27,10 @@ function ButtonContainer(_: ButtonContainerProps) {
 }
 
 function Button(props: ButtonComponent) {
-  const Component = buttonVariations[props.variation] || buttonVariations.default;
+  const Component = buttonVariations[props.variation??"default"] 
   return <Component {...props} />;
 }
 
 export {
-  ButtonComponent,
   Button
 };

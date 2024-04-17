@@ -1,46 +1,63 @@
 import React from 'react'
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-interface TextContainerProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "children"> {
+interface TextContainerProps {
   register?: UseFormRegisterReturn
   readOnly?: boolean
+  className:string
+  placeholder?:string
+  disabled?:boolean
+  mask?:[RegExp,string]
 }
 
-interface TextProps extends Omit<TextContainerProps, "className"> {
+interface TextVariation extends Omit<TextContainerProps, "className"> {
+
+}
+
+interface TextComponent extends TextVariation{
   variation?:keyof typeof  inputVariations;
 }
 
 interface LabelContainerProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
 }
 
-interface LabelProps extends Omit<LabelContainerProps, "className"> {
+interface LabelVariation extends Omit<LabelContainerProps, "className"> {
+
+}
+
+interface LabelComponent extends LabelVariation {
   variation?:keyof typeof  labelVariations;
 }
 
-interface RootContainerProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
+interface RootContainerProps {
+  className:string
+  children:React.ReactNode
+}
+
+interface RootVariation extends Omit<RootContainerProps, "className"> {
 
 }
 
-interface RootProps extends Omit<RootContainerProps, "className"> {
+interface RootComponent extends RootVariation {
   variation?:keyof typeof  rootVariations;
 }
 
 const rootVariations = {
-  default: (_: RootProps) =>
-    <RootContainer {..._} className="flex-col flex relative text-zinc-200" />
+  default: (props: RootVariation) =>
+    <RootContainer {...props} className="flex-col flex relative text-zinc-200" />
 }
 
 const inputVariations = {
-  default: (_: TextProps) =>
-    <TextContainer {..._} className="h-9 rounded border bg-white border-black text-black indent-1 p-1  " />,
-  password: (_: TextProps) =>
-    <TextContainer {..._} className="h-9 rounded border border-black text-black indent-1 p-1" />,
-  dropdown: (_: TextProps) =>
-    <TextContainer {..._} className="cursor-pointer h-9 rounded border bg-white border-black text-black indent-1 p-1 text-ellipsis overflow-hidden" />,
+  default: (props: TextVariation) =>
+    <TextContainer {...props} className="h-9 rounded border bg-white border-black text-black indent-1 p-1  " />,
+  password: (props: TextVariation) =>
+    <TextContainer {...props} className="h-9 rounded border border-black text-black indent-1 p-1" />,
+  dropdown: (props: TextVariation) =>
+    <TextContainer {...props} className="cursor-pointer h-9 rounded border bg-white border-black text-black indent-1 p-1 text-ellipsis overflow-hidden" />,
 }
 
 const labelVariations = {
-  default: (props: LabelProps) =>
+  default: (props: LabelVariation) =>
     <LabelContainer {...props} className='mb-1 font-semibold px-1 text-zinc-800' />,
 }
 
@@ -55,9 +72,16 @@ function TextContainer(_: TextContainerProps) {
   const props = { ..._, register: null }
 
   return (
-      <input {...props}  {...register} />
+      <input 
+        {...props}  
+        {...register}
+        onChange={(e)=>{
+          e.target.value = props.mask? e.target.value.replace(/\D/g, '').replace(props.mask[0],props.mask[1]):e.target.value
+        }}
+      />
   )
 }
+
 
 function RootContainer(_: RootContainerProps) {
   return (
@@ -67,17 +91,17 @@ function RootContainer(_: RootContainerProps) {
   )
 }
 
-function Label(props: LabelProps) {
+function Label(props: LabelComponent) {
   const Component = labelVariations[props.variation ?? "default"]
   return <Component {...props} />;
 }
 
-function Text(props: TextProps) {
+function Text(props: TextComponent) {
   const Component = inputVariations[props.variation ?? "default"]
   return <Component {...props} />;
 }
 
-function Root(props: RootProps) {
+function Root(props: RootComponent) {
   const Component = rootVariations[props.variation ?? "default"]
   return <Component {...props} />;
 }
