@@ -5,16 +5,20 @@ interface ButtonContainerProps extends React.ButtonHTMLAttributes<HTMLButtonElem
   loadingComponent?: React.ReactNode;
 }
 
-interface ButtonProps extends Omit<ButtonContainerProps, "className"> {
+interface ButtonVariation extends Omit<ButtonContainerProps, "className"> {
+ 
+}
+
+interface ButtonComponent extends ButtonVariation {
   variation: keyof typeof buttonVariations;
 }
 
 const buttonVariations = {
-  green: (props: ButtonProps) =>
+  green: (props: ButtonVariation) =>
     <ButtonContainer {...props} className='bg-green-500' />,
-  red: (props: ButtonProps) =>
+  red: (props: ButtonVariation) =>
     <ButtonContainer {...props} className='bg-red-500' />,
-  default: (props: ButtonProps) =>
+  default: (props: ButtonVariation) =>
     <ButtonContainer {...props} className='bg-red-500' />,
 }
 
@@ -26,12 +30,12 @@ function ButtonContainer(_: ButtonContainerProps) {
   );
 }
 
-function Button(props: ButtonProps) {
+function Button(props: ButtonComponent) {
   const Component = buttonVariations[props.variation] || buttonVariations.default;
   return <Component {...props} />;
 }
 
 export {
-  ButtonProps,
+  ButtonComponent,
   Button
 };

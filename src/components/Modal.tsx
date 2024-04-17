@@ -1,31 +1,37 @@
 import React, { useEffect, useState } from 'react'
 
-interface ModalContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+interface ModalContainerProps {
     timer: number,
     open: boolean,
-    callback: () => {}
+    callback: () => {},
+    className:string,
+    children: React.ReactNode
 }
 
-interface ModalProps extends Omit<ModalContainerProps,"className"> {
+interface ModalVariation extends Omit<ModalContainerProps,"className"> {
+
+}
+
+interface ModalComponent extends ModalContainerProps {
     variation: keyof typeof modalVariations;
 }
 
 const modalVariations = {
-    default: (_: ModalProps) => <ModalContainer {..._}  className=''/>
+    default: (props: ModalVariation) => 
+    <ModalContainer {...props}  className=''/>
 }
 
 function ModalContainer(_: ModalContainerProps) {
-
     const [style, setStyle] = useState("opacity-0")
     const [opened, setOpened] = useState(false)
 
-    const handleOpen = () => {
+    function handleOpen() {
         setOpened(true)
         setTimeout(() => {
             setStyle("opacity-100")
         }, _.timer);
     }
-    const handleClose = () => {
+    function handleClose() {
         setStyle("opacity-0")
         setTimeout(() => {
             setOpened(false)
@@ -44,7 +50,7 @@ function ModalContainer(_: ModalContainerProps) {
     )
 }
 
-function Modal(props: ModalProps) {
+function Modal(props: ModalComponent) {
     const Component = modalVariations[props.variation] || modalVariations.default;
     return <Component {...props} />;
 }

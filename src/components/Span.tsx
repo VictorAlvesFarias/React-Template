@@ -1,27 +1,34 @@
 import React from 'react'
 
-interface SpanContainerProps extends React.HTMLAttributes<HTMLSpanElement> {
+interface SpanContainerProps {
+  className:string,
+  children: React.ReactNode
+}
+
+interface SpanVariation extends Omit<SpanContainerProps, "className"> {
 
 }
 
-interface SpanProps extends Omit<SpanContainerProps, "className"> {
+interface SpanComponent extends SpanVariation {
   variation: keyof typeof spanVariations;
 }
 
 const spanVariations = {
-  default: (props: SpanProps) =>
-    <SpanContainer {...props} className='mb-1 font-semibold px-1' />,
-  error: (props: SpanProps) =>
-    <SpanContainer {...props} className='text-red-400' />,
+  default: (props: SpanVariation) =>
+    <SpanContainer children={props.children} className='mb-1 font-semibold px-1' />,
+  error: (props: SpanVariation) =>
+    <SpanContainer children={props.children} className='text-red-400' />,
 }
 
-function SpanContainer(_: SpanContainerProps) {
+function SpanContainer(props: SpanContainerProps) {
   return (
-    <span {..._} />
+    <span className={props.className}>
+      {props.children}
+    </span>
   )
 }
 
-function Span(props: SpanProps) {
+function Span(props: SpanComponent) {
   const Component = spanVariations[props.variation] || spanVariations.default;
   return <Component {...props} />;
 }

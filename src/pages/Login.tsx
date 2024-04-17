@@ -3,8 +3,8 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { AuthContext } from '../context/AuthContext'
 import { zodResolver } from "@hookform/resolvers/zod"
-import {Input} from '../components/Input'
-import {Dropdown} from '../components/Dropdown'
+import Input from '../components/Input'
+import Dropdown from '../components/Dropdown'
 
 function Login() {
   const [loginLoading, setLoginLoding] = useState(false)
@@ -31,7 +31,20 @@ function Login() {
   }
 
   return (
-    <section className=" h-screen item">
+    <section className=" h-screen w-96 item">
+      <Input.Root variation='default'>
+        <Input.Label variation='default'>Teste</Input.Label>
+        <Dropdown.Root
+          register={register("email")}
+          setValue={setValue}
+          variation='default'
+        >
+          <Dropdown.Menu>
+            <Dropdown.Option variation={'default'}value='' label='12345'/>
+          </Dropdown.Menu>
+        </Dropdown.Root>
+      </Input.Root>
+
     </section>
   )
 }
