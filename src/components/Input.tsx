@@ -75,8 +75,9 @@ function TextContainer(_: TextContainerProps) {
       <input 
         {...props}  
         {...register}
-        onChange={(e)=>{
+        onChange={(e)=>{ 
           e.target.value = props.mask? e.target.value.replace(/\D/g, '').replace(props.mask[0],props.mask[1]):e.target.value
+          register.onChange?register.onChange(e):null
         }}
       />
   )
