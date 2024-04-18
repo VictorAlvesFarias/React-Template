@@ -1,12 +1,14 @@
 import React from 'react';
 
-interface ButtonContainerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonContainerProps {
   loading?: boolean;
   loadingComponent?: React.ReactNode;
+  children: React.ReactNode,
+  className: string
 }
 
 interface ButtonVariation extends Omit<ButtonContainerProps, "className"> {
- 
+
 }
 
 interface ButtonComponent extends ButtonVariation {
@@ -27,7 +29,7 @@ function ButtonContainer(_: ButtonContainerProps) {
 }
 
 function Button(props: ButtonComponent) {
-  const Component = buttonVariations[props.variation??"default"] 
+  const Component = buttonVariations[props.variation ?? "default"]
   return <Component {...props} />;
 }
 
