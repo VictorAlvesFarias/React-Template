@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,memo } from 'react'
 import { DropdownOption } from '../interfaces/data/DropdownOption';
 import { UseFormRegisterReturn, UseFormSetValue } from 'react-hook-form';
 
@@ -19,7 +19,7 @@ interface OptionComponent extends OptionVariation {
 
 interface MenuContainerProps {
     onValueChange?: (_: DropdownOption) => void
-    children: React.ReactElement<OptionContainerProps>,
+    children: React.ReactElement<OptionContainerProps>[],
     className: string
 };
 
@@ -31,10 +31,11 @@ interface MenuComponent extends MenuVariation {
     variation?: keyof typeof menuVariations;
 }
 
-interface RootContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+interface RootContainerProps {
     setValue: UseFormSetValue<any>;
     register: UseFormRegisterReturn;
     children: React.ReactElement<MenuContainerProps>
+    className: string
 };
 
 interface RootVariation extends Omit<RootContainerProps, "className"> {
@@ -84,7 +85,7 @@ function MenuContainer(props: MenuContainerProps) {
 
 function OptionContainer(props: OptionContainerProps) {
     return (
-        <div onClick={() => props.onClick?props.onClick({ value: props.value, label: props.label }):null} className={props.className} >
+        <div onClick={() => props.onClick ? props.onClick({ value: props.value, label: props.label }) : null} className={props.className} >
             {props.label}
         </div>
     )
@@ -105,12 +106,12 @@ function RootContainer(props: RootContainerProps) {
     return (
         <>
             <div className='w-full relative '>
-                <p {...props} onClick={() => setDrop(!drop)} >
+                <p  className={props.className} onClick={() => setDrop(!drop)} >
                     {selected?.label}
                 </p>
                 <input className='hidden' {...props.register} />
 
-                {drop && <div className={'absolute w-full h-full z-50'}>
+                {drop && <div className={'absolute w-full h-full z-20'}>
                     {
                         React.cloneElement(props.children, {
                             onValueChange: (e) => selectItem(e)

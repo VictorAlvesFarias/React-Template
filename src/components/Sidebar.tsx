@@ -116,12 +116,12 @@ const itemVariations = {
 
 const contentVariations = {
     default: (props: ContentVariation) =>
-        <ContentContainer {...props} className=" h-full flex flex-1 center" />
+        <ContentContainer {...props} className=" h-full flex-col md:flex-rol flex flex-1 center " />
 }
 
 const hamburguerVariations = {
     default: (props: HamburguerVariation) =>
-        <HamburguerContainer {...props} className=" h-full flex flex-1 center fixed top-0 left-0 md:hidden " />
+        <HamburguerContainer {...props} className=" z-30 p-2 flex-1 justify-end  top-0 left-0 md:hidden flex w-full bg-zinc-800 " />
 }
 
 function RootContainer(props: RootContainer) {
@@ -147,7 +147,7 @@ function MenuContainer(props: MenuContainer) {
                 <div className={'flex-1 pr-12 w-full h-full'} onClick={() => setOpen(false)}>
                 </div>
             </div>
-            <div className={'flex-1 pr-12  fixed top-0 h-full w-full transition-all ' + (open ? "right-0 delay-0" : "right-full delay-500 ")}>
+            <div className={'flex-1 pr-12 z-40 fixed flex md:hidden  top-0 h-full w-full transition-all ' + (open ? "right-0 delay-0" : "right-full delay-500 ")}>
                 <div className={'flex-1 pr-12  fixed  h-full w-full bg-black transition-all duration-500 ' + (open ? "opacity-30" : "opacity-0")}>
                 </div>
             </div>
