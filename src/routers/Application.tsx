@@ -28,7 +28,7 @@ function Application() {
                 </Sidebar.Menu>
                 <Sidebar.Content>
                     <Sidebar.Hamburguer>
-                        <LucideMenu className='w-7 h-7 text-zinc-900' />
+                        <LucideMenu className='w-7 h-7 text-zinc-300' />
                     </Sidebar.Hamburguer>
                     <Routes>
                         <Route path="/home" element={<Home />} />
