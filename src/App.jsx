@@ -1,25 +1,21 @@
 import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Application from './routers/Application';
 import { AuthProvider } from './context/AuthContext';
 import { ToastContainer } from 'react-toastify';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
     <Router>
       <AuthProvider>
         <ToastContainer />
-        <div className="w-full h-full flex justify-center items-center">
           <Routes>
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
-            <Route path="home" element={<Home />} />
-            <Route path="" element={<Home />} />
-            <Route path="index.html" element={<Home />} />
+            <Route path="/*" element={<Application />} />
           </Routes>
-        </div>
       </AuthProvider>
     </Router>
   );

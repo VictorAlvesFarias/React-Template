@@ -15,7 +15,7 @@ interface ButtonComponent extends ButtonVariation {
 
 const buttonVariations = {
   default: (props: ButtonVariation) =>
-    <ButtonContainer {...props} className='bg-red-500 w-full rounded p-1' />,
+    <ButtonContainer {...props} className='bg-green-500 w-full rounded p-1' />,
 }
 
 function ButtonContainer(_: ButtonContainerProps) {
