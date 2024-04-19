@@ -14,6 +14,28 @@ interface RootComponent extends RootVariation {
     variation?: keyof typeof rootVariations
 }
 
+function RootContainer(props: RootContainer) {
+    return (
+        <div className={props.className} >
+            {props.children}
+        </div>
+    )
+}
+
+function Root(props: RootComponent) {
+    const Component = rootVariations[props.variation ?? "default"]
+    return (
+        <Context>
+            <Component {...props} />
+        </Context>
+    )
+}
+
+const rootVariations = {
+    default: (props: RootVariation) =>
+        <RootContainer {...props} className="flex flex-col md:flex-row w-screen h-screen" />
+}
+
 interface ContentContainer {
     className: string,
     children?: React.ReactNode
@@ -27,6 +49,24 @@ interface ContentComponent extends ContentVariation {
     variation?: keyof typeof rootVariations
 }
 
+function ContentContainer(props: ContentContainer) {
+    return (
+        <div className={props.className}>
+            {props.children}
+        </div>
+    )
+}
+
+function Content(props: ContentComponent) {
+    const Component = contentVariations[props.variation ?? "default"]
+    return <Component {...props} />;
+}
+
+const contentVariations = {
+    default: (props: ContentVariation) =>
+        <ContentContainer {...props} className=" h-full flex-col md:flex-rol flex flex-1 center " />
+}
+
 interface MenuContainer {
     className: string,
     children: React.ReactNode
@@ -38,98 +78,6 @@ interface MenuVariation extends Omit<MenuContainer, "className"> {
 
 interface MenuComponent extends MenuVariation {
     variation?: keyof typeof rootVariations
-}
-
-interface HrefContainer {
-    className: string,
-    children: React.ReactNode
-}
-
-interface HrefVariation extends Omit<HrefContainer, "className"> {
-
-}
-
-interface HrefComponent extends HrefVariation {
-    variation?: keyof typeof rootVariations
-}
-
-interface ItemContainer {
-    className: string
-    children: React.ReactNode
-    href: string
-    selected: string
-}
-
-interface ItemVariation extends Omit<ItemContainer, "className" | "selected"> {
-
-}
-
-interface ItemComponent extends ItemVariation {
-    variation?: keyof typeof itemVariations
-}
-
-interface HamburguerContainer {
-    className: string,
-    children: React.ReactNode
-}
-
-interface HamburguerVariation extends Omit<HamburguerContainer, "className"> {
-
-}
-
-interface HamburguerComponent extends HamburguerVariation {
-    variation?: keyof typeof itemVariations
-}
-
-const rootVariations = {
-    default: (props: RootVariation) =>
-        <RootContainer {...props} className="flex flex-col md:flex-row w-screen h-screen" />
-}
-
-const menuVariations = {
-    default: (props: MenuVariation) =>
-        <MenuContainer
-            {...props}
-            className="w-60 flex-col h-full p-2 bg-gradient-to-b from-black to-zinc-900 gap-1"
-        />
-}
-
-const hrefVariations = {
-    default: (props: HrefVariation) =>
-        <HrefContainer {...props} className="" />
-}
-
-const itemVariations = {
-    default: (props: ItemVariation) =>
-        <ItemContainer
-            {...props}
-            className="w-full flex items-center gap-3 text-ellipsis overflow-hidden pl-3 p-2 h-fit rounded text-zinc-300 text-md cursor-pointer hover:bg-zinc-800 "
-            selected="w-full flex items-center gap-3 text-ellipsis overflow-hidden pl-3 p-2 h-fit rounded text-zinc-300 text-md cursor-pointer bg-zinc-800 "
-        />,
-    "spacing-top": (props: ItemVariation) =>
-        <ItemContainer
-            {...props}
-            className="w-full flex items-center gap-3 text-ellipsis overflow-hidden pl-3 p-2 h-fit rounded text-zinc-300 text-md cursor-pointer hover:bg-zinc-800 mt-auto"
-            selected="w-full flex items-center gap-3 text-ellipsis overflow-hidden pl-3 p-2 h-fit rounded text-zinc-300 text-md cursor-pointer bg-zinc-800 "
-        />
-}
-
-const contentVariations = {
-    default: (props: ContentVariation) =>
-        <ContentContainer {...props} className=" h-full flex-col md:flex-rol flex flex-1 center " />
-}
-
-const hamburguerVariations = {
-    default: (props: HamburguerVariation) =>
-        <HamburguerContainer {...props} className=" z-30 p-2 flex-1 justify-end  top-0 left-0 md:hidden flex w-full bg-zinc-800 " />
-}
-
-function RootContainer(props: RootContainer) {
-    return (
-        <div className={props.className} >
-            {props.children}
-        </div>
-    )
 }
 
 function MenuContainer(props: MenuContainer) {
@@ -155,12 +103,63 @@ function MenuContainer(props: MenuContainer) {
     )
 }
 
+function Menu(props: MenuComponent) {
+    const Component = menuVariations[props.variation ?? "default"]
+    return <Component {...props} />;
+}
+
+const menuVariations = {
+    default: (props: MenuVariation) =>
+        <MenuContainer
+            {...props}
+            className="w-60 flex-col h-full p-2 bg-gradient-to-b from-black to-zinc-900 gap-1"
+        />
+}
+
+interface HrefContainer {
+    className: string,
+    children: React.ReactNode
+}
+
+interface HrefVariation extends Omit<HrefContainer, "className"> {
+
+}
+
+interface HrefComponent extends HrefVariation {
+    variation?: keyof typeof rootVariations
+}
+
 function HrefContainer(props: HrefContainer) {
     return (
         <p className={props.className}>
             {props.children}
         </p>
     )
+}
+
+function Href(props: HrefComponent) {
+    const Component = hrefVariations[props.variation ?? "default"]
+    return <Component {...props} />;
+}
+
+const hrefVariations = {
+    default: (props: HrefVariation) =>
+        <HrefContainer {...props} className="" />
+}
+
+interface ItemContainer {
+    className: string
+    children: React.ReactNode
+    href: string
+    selected: string
+}
+
+interface ItemVariation extends Omit<ItemContainer, "className" | "selected"> {
+
+}
+
+interface ItemComponent extends ItemVariation {
+    variation?: keyof typeof itemVariations
 }
 
 function ItemContainer(props: ItemContainer) {
@@ -173,12 +172,37 @@ function ItemContainer(props: ItemContainer) {
     )
 }
 
-function ContentContainer(props: ContentContainer) {
-    return (
-        <div className={props.className}>
-            {props.children}
-        </div>
-    )
+function Item(props: ItemComponent) {
+    const Component = itemVariations[props.variation ?? "default"]
+    return <Component {...props} />;
+}
+
+const itemVariations = {
+    default: (props: ItemVariation) =>
+        <ItemContainer
+            {...props}
+            className="w-full flex items-center gap-3 text-ellipsis overflow-hidden pl-3 p-2 h-fit rounded text-zinc-300 text-md cursor-pointer hover:bg-zinc-800 "
+            selected="w-full flex items-center gap-3 text-ellipsis overflow-hidden pl-3 p-2 h-fit rounded text-zinc-300 text-md cursor-pointer bg-zinc-800 "
+        />,
+    "spacing-top": (props: ItemVariation) =>
+        <ItemContainer
+            {...props}
+            className="w-full flex items-center gap-3 text-ellipsis overflow-hidden pl-3 p-2 h-fit rounded text-zinc-300 text-md cursor-pointer hover:bg-zinc-800 mt-auto"
+            selected="w-full flex items-center gap-3 text-ellipsis overflow-hidden pl-3 p-2 h-fit rounded text-zinc-300 text-md cursor-pointer bg-zinc-800 "
+        />
+}
+
+interface HamburguerContainer {
+    className: string,
+    children: React.ReactNode
+}
+
+interface HamburguerVariation extends Omit<HamburguerContainer, "className"> {
+
+}
+
+interface HamburguerComponent extends HamburguerVariation {
+    variation?: keyof typeof itemVariations
 }
 
 function HamburguerContainer(props: HamburguerContainer) {
@@ -190,34 +214,14 @@ function HamburguerContainer(props: HamburguerContainer) {
     )
 }
 
-function Root(props: RootComponent) {
-    const Component = rootVariations[props.variation ?? "default"]
-    return <Component {...props} />;
-}
-
-function Href(props: HrefComponent) {
-    const Component = hrefVariations[props.variation ?? "default"]
-    return <Component {...props} />;
-}
-
-function Content(props: ContentComponent) {
-    const Component = contentVariations[props.variation ?? "default"]
-    return <Component {...props} />;
-}
-
-function Menu(props: MenuComponent) {
-    const Component = menuVariations[props.variation ?? "default"]
-    return <Component {...props} />;
-}
-
-function Item(props: ItemComponent) {
-    const Component = itemVariations[props.variation ?? "default"]
-    return <Component {...props} />;
-}
-
 function Hamburguer(props: HamburguerComponent) {
     const Component = hamburguerVariations[props.variation ?? "default"]
     return <Component {...props} />;
+}
+
+const hamburguerVariations = {
+    default: (props: HamburguerVariation) =>
+        <HamburguerContainer {...props} className=" z-30 p-2 flex-1 justify-end  top-0 left-0 md:hidden flex w-full bg-zinc-800 " />
 }
 
 interface ContextType {
@@ -225,12 +229,6 @@ interface ContextType {
     setOpen: (e: boolean) => any
     selected: string
 }
-
-const SidebarContext = createContext<ContextType>({
-    open: true,
-    setOpen: () => { },
-    selected: ""
-});
 
 interface ContextComponent {
     children: React.ReactNode
@@ -248,12 +246,17 @@ function Context(props: ContextComponent) {
     return <SidebarContext.Provider value={context} children={props.children} />
 }
 
+const SidebarContext = createContext<ContextType>({
+    open: true,
+    setOpen: () => { },
+    selected: ""
+});
+
 export default {
     Menu,
     Content,
     Href,
     Root,
     Item,
-    Hamburguer,
-    Context
+    Hamburguer
 }

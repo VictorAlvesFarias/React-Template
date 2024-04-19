@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.rotating-div {
+    animation: spin 1s linear infinite; /* Aplica a animação de rotação */
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg); /* Começa a girar a partir de 0 graus */
+    }
+    to {
+      transform: rotate(360deg); /* Gira a 360 graus */
+    }
+  }
+  
