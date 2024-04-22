@@ -14,11 +14,6 @@ interface FormComponent extends FormVariation {
     variation?: keyof typeof formsVariation;
 }
 
-const formsVariation = {
-    default: (props: FormVariation) =>
-        <FormContainer {...props} className='flex flex-col gap-3' />
-}
-
 function FormContainer(props: FormContainerProps) {
     return (
         <form className={props.className} onSubmit={props.onSubmit} >
@@ -30,6 +25,11 @@ function FormContainer(props: FormContainerProps) {
 function Form(props: FormComponent) {
     const Component = formsVariation[props.variation??"default"] 
     return <Component {...props} />;
+}
+
+const formsVariation = {
+    default: (props: FormVariation) =>
+        <FormContainer {...props} className='flex flex-col gap-3' />
 }
 
 export {

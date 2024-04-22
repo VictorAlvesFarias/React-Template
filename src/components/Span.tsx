@@ -13,13 +13,6 @@ interface SpanComponent extends SpanVariation {
   variation: keyof typeof spanVariations;
 }
 
-const spanVariations = {
-  default: (props: SpanVariation) =>
-    <SpanContainer children={props.children} className='mb-1 font-semibold px-1' />,
-  error: (props: SpanVariation) =>
-    <SpanContainer children={props.children} className='text-red-400' />,
-}
-
 function SpanContainer(props: SpanContainerProps) {
   return (
     <span className={props.className}>
@@ -31,6 +24,13 @@ function SpanContainer(props: SpanContainerProps) {
 function Span(props: SpanComponent) {
   const Component = spanVariations[props.variation] || spanVariations.default;
   return <Component {...props} />;
+}
+
+const spanVariations = {
+  default: (props: SpanVariation) =>
+    <SpanContainer children={props.children} className='mb-1 font-semibold px-1' />,
+  error: (props: SpanVariation) =>
+    <SpanContainer children={props.children} className='text-red-400' />,
 }
 
 export {

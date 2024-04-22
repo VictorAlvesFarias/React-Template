@@ -1,15 +1,15 @@
 import Cookies from 'js-cookie';
 import React from 'react';
 import { createContext, useEffect, useState } from 'react';
-import { useErrors } from '../utils/hooks/Errors';
+import { useErrors } from '../utils/hooks/errors';
 import { useNavigate } from 'react-router-dom';
-import { LoginService } from './../services/LoginService';
-import { config } from './AuthConfig';
-import { LoginData } from '../interfaces/data/LoginData';
-import { Axios } from '../interfaces/shared/Axios';
-import { BaseResponseApi } from '../interfaces/shared/BaseResponseApi';
-import { AuthContextType } from '../interfaces/shared/AuthContextType';
-import { LoginForm } from '../interfaces/data/LoginForm';
+import { LoginService } from '../services/login-service';
+import { config } from './auth-config';
+import { LoginData } from '../interfaces/data/login-data';
+import { Axios } from '../interfaces/shared/axios';
+import { BaseResponseApi } from '../interfaces/shared/base-response-api';
+import { AuthContextType } from '../interfaces/shared/auth-context';
+import { LoginForm } from '../interfaces/data/login-form';
 
 const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
@@ -42,7 +42,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       Cookies.remove('jwtApplicationToken');
       Cookies.remove('expirationJwtApplicationToken');
       Cookies.remove('expirationDateTimeJwtApplicationToken');
-      window.location.href = "./"
+      window.location.href = "./login"
     },
     isAuthenticated: isAuthenticated
   }
@@ -55,9 +55,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (token) {
         authContext.logout()
       }
-      else if (
-        !config.authorizeNotRequired.includes(window.location.pathname)
-      ) {
+      else if (!config.authorizeNotRequired.includes(window.location.pathname)&&!config.desactivateAuth ) {
         navigate("/login")
       }
     }, timeDiference);
