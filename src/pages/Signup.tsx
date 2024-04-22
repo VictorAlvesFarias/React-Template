@@ -4,6 +4,12 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SignupService } from '../services/signup-service';
 
+interface SignupSchema {
+    password: string
+    passwordConfirm: string
+    email: string
+}
+
 function Signup() {
     const signupService = new SignupService()
 
@@ -17,10 +23,8 @@ function Signup() {
         passwordConfirm: z.string().nonempty("Campo Obrigatório")
     })
 
-    type LoginSchema = z.infer<typeof loginSchema>
-
-    const { handleSubmit, formState: { errors }, register } = useForm<LoginSchema>(
-        { 
+    const { handleSubmit, formState: { errors }, register } = useForm<SignupSchema>(
+        {
             resolver: zodResolver(loginSchema)
         }
     );
@@ -41,3 +45,7 @@ function Signup() {
 }
 
 export default Signup
+
+export {
+    SignupSchema
+}

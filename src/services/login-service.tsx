@@ -1,12 +1,12 @@
 import axios from "axios";
-import { loginUrl } from "./api";
-import { LoginForm } from "../interfaces/data/login-form";
+import { env } from "../environment"
+import { LoginSchema } from "../pages/Login";
 
-export class LoginService {
-  loginPost(_: LoginForm) {
-    const result = axios.post(loginUrl, {
-      email: _.email,
-      password: _.password
+class LoginService {
+  loginPost(data: LoginSchema) {
+    const result = axios.post(env, {
+      email: data.email,
+      password: data.password
     })
       .then(response => {
         return response
@@ -16,4 +16,8 @@ export class LoginService {
       })
     return result
   }
+}
+
+export {
+  LoginService
 }
