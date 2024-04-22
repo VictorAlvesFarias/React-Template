@@ -152,6 +152,7 @@ interface ItemContainer {
     children: React.ReactNode
     href: string
     selected: string
+    onClick?: (e: any) => any
 }
 
 interface ItemVariation extends Omit<ItemContainer, "className" | "selected"> {
@@ -166,7 +167,11 @@ function ItemContainer(props: ItemContainer) {
     const { selected } = useContext(SidebarContext)
 
     return (
-        <Link to={props.href} className={selected.split("/")[1] == props.href.split("/")[1] ? props.selected : props.className}>
+        <Link
+            onClick={props.onClick}
+            to={props.href}
+            className={selected.split("/")[1] == props.href.split("/")[1] ? props.selected : props.className}
+        >
             {props.children}
         </Link>
     )

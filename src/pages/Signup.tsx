@@ -2,33 +2,34 @@ import React, { useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { SignupService } from './../services/SignupService';
-import {Button} from '../components/Button'
+import { SignupService } from '../services/signup-service';
 
 function Signup() {
-    const [loginLoading, setLoginLoding] = useState(false)
-    const [signUpSuccefull, setSignUpSuccefull] = useState(false)
     const signupService = new SignupService()
-    const formSchema = z.object({
+
+    const [loading, setLoading] = useState({
+        signup: false
+    })
+
+    const loginSchema = z.object({
         email: z.string().nonempty("Campo Obrigatório").email("E-mail Inválido"),
         password: z.string().nonempty("Campo Obrigatório"),
         passwordConfirm: z.string().nonempty("Campo Obrigatório")
     })
-    const { handleSubmit, formState: { errors }, register } = useForm<z.infer<typeof formSchema>>(
-        {
-            resolver: zodResolver(formSchema),
+
+    type LoginSchema = z.infer<typeof loginSchema>
+
+    const { handleSubmit, formState: { errors }, register } = useForm<LoginSchema>(
+        { 
+            resolver: zodResolver(loginSchema)
         }
     );
 
     function handleSingup(data) {
-        setLoginLoding(true)
+        setLoading({ ...loading, signup: true })
         signupService.signupPost(data)
             .then(() => {
-                setLoginLoding(false)
-                setSignUpSuccefull(true)
-            })
-            .catch(() => {
-                setLoginLoding(false)
+                setLoading({ ...loading, signup: false })
             })
     }
 
@@ -36,7 +37,6 @@ function Signup() {
         <section className=" min-h-screen flex items-center ">
 
         </section>
-
     )
 }
 

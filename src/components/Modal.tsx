@@ -16,11 +16,6 @@ interface ModalComponent extends ModalContainerProps {
     variation: keyof typeof modalVariations;
 }
 
-const modalVariations = {
-    default: (props: ModalVariation) => 
-    <ModalContainer {...props}  className=''/>
-}
-
 function ModalContainer(_: ModalContainerProps) {
     const [style, setStyle] = useState("opacity-0")
     const [opened, setOpened] = useState(false)
@@ -53,6 +48,11 @@ function ModalContainer(_: ModalContainerProps) {
 function Modal(props: ModalComponent) {
     const Component = modalVariations[props.variation] || modalVariations.default;
     return <Component {...props} />;
+}
+
+const modalVariations = {
+    default: (props: ModalVariation) => 
+    <ModalContainer {...props}  className=''/>
 }
 
 export {

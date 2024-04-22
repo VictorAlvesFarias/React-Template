@@ -1,4 +1,4 @@
-import { LoginForm } from "../data/LoginForm";
+import { LoginForm } from "../data/login-form";
 
 export interface AuthContextType {
     isAuthenticated?: boolean;

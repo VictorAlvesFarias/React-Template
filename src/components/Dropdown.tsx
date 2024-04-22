@@ -1,5 +1,4 @@
 import React, { useState, memo, createContext, useContext } from 'react'
-import { DropdownOption } from '../interfaces/data/DropdownOption';
 import { UseFormRegisterReturn, UseFormSetValue } from 'react-hook-form';
 
 interface DefaultInputComponentProps {
@@ -10,6 +9,11 @@ interface DefaultInputComponentProps {
     onBlur?: (e: any) => any
     ref?: any,
     value?: any
+}
+
+interface DropdownOption {
+    value: string | number,
+    label: string,
 }
 
 interface OptionContainerProps {
@@ -26,6 +30,7 @@ interface OptionVariation extends Omit<OptionContainerProps, "className"> {
 interface OptionComponent extends OptionVariation {
     variation?: keyof typeof optionVariations;
 }
+
 
 function OptionContainer(props: OptionContainerProps) {
     const { setOpen } = useContext(DropdownContext)
