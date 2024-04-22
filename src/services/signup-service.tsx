@@ -1,15 +1,15 @@
 
 import axios from 'axios';
-import { registerUserUrl } from './api';
-import { SignupForm } from '../interfaces/data/SignupForm';
+import { env } from '../environment';
+import { SignupSchema } from '../pages/Signup';
 
-export class SignupService {
-  async signupPost(_: SignupForm) {
-    const result = axios.post(registerUserUrl,
+class SignupService {
+  async signupPost(data: SignupSchema) {
+    const result = axios.post(env,
       {
-        username: _.email,
-        password: _.password,
-        confirmPassword: _.passwordConfirm
+        username: data.email,
+        password: data.password,
+        confirmPassword: data.passwordConfirm
       }
     )
       .then(response => {
@@ -21,4 +21,8 @@ export class SignupService {
 
     return await result
   }
+}
+
+export {
+  SignupService
 }

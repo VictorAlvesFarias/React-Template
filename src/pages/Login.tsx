@@ -11,6 +11,11 @@ import { Span } from '../components/span'
 import { Link } from 'react-router-dom'
 import { LucideCheck } from 'lucide-react'
 
+interface LoginSchema {
+  email: string
+  password: string
+}
+
 function Login() {
   const [rememberMe, setRemeberMe] = useState(localStorage.getItem("remember-me") == "true")
   const context = useContext(AuthContext)
@@ -23,10 +28,8 @@ function Login() {
     email: z.string().nonempty("Campo Obrigatório").email("E-Mail Inválido"),
     password: z.string().nonempty("Campo Obrigatório"),
   })
-  
-  type LoginSchema = z.infer<typeof loginSchema>
 
-  const {register,control,formState,handleSubmit } = useForm<LoginSchema>(
+  const { register, control, formState, handleSubmit } = useForm<LoginSchema>(
     {
       resolver: zodResolver(loginSchema),
     }
@@ -80,3 +83,7 @@ function Login() {
 }
 
 export default Login
+
+export {
+  LoginSchema
+}
