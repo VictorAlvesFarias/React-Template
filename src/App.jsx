@@ -2,7 +2,7 @@ import './App.css';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Application from './routers/Application';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from './context/auth-context';
 import { ToastContainer } from 'react-toastify';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
