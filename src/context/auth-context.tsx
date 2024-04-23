@@ -9,7 +9,7 @@ import { LoginData } from '../interfaces/data/login-data';
 import { Axios } from '../interfaces/shared/axios';
 import { BaseResponseApi } from '../interfaces/shared/base-response-api';
 import { AuthContextType } from '../interfaces/shared/auth-context';
-import { LoginForm } from '../interfaces/data/login-form';
+import { LoginSchema } from '../pages/Login';
 
 const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
@@ -23,7 +23,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const loginService = new LoginService()
   const [isAuthenticated, setIsAuthenticated] = useState(!!token);
   const authContext: AuthContextType = {
-    signIn: async (data: LoginForm) => {
+    signIn: async (data: LoginSchema) => {
       const result = loginService.loginPost(data)
         .then(({ data: { res } }: Axios<BaseResponseApi<LoginData>>) => {
           setIsAuthenticated(true)
