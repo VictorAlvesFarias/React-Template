@@ -1,15 +1,15 @@
 import Cookies from 'js-cookie';
 import React from 'react';
 import { createContext, useEffect, useState } from 'react';
-import { useErrors } from '../utils/hooks/errors';
+import { useErrors } from '../utils/hooks/use-errors';
 import { useNavigate } from 'react-router-dom';
 import { LoginService } from '../services/login-service';
-import { config } from './auth-config';
-import { LoginData } from '../interfaces/data/login-data';
+import { authConfig } from '../config/auth-config';
 import { Axios } from '../interfaces/shared/axios';
-import { BaseResponseApi } from '../interfaces/shared/base-response-api';
 import { AuthContextType } from '../interfaces/shared/auth-context';
-import { LoginSchema } from '../pages/Login';
+import { BaseResponseApi } from '../interfaces/shared/base-response-api'
+import { LoginSchema } from '../interfaces/schemas/login-schema';
+import { LoginEntity } from '../interfaces/entities/login-entity';
 
 const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
@@ -18,32 +18,40 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const navigate = useNavigate();
   const token = Cookies.get('jwtApplicationToken');
   const loginService = new LoginService()
   const [isAuthenticated, setIsAuthenticated] = useState(!!token);
-  const authContext: AuthContextType = {
-    signIn: async (data: LoginSchema) => {
-      const result = loginService.loginPost(data)
-        .then(({ data: { res } }: Axios<BaseResponseApi<LoginData>>) => {
-          setIsAuthenticated(true)
-          Cookies.set('jwtApplicationToken', res.accessToken, { expires: 0.1 })
-          Cookies.set('expirationJwtApplicationToken', res.expirationTimeAccessToken, { expires: 0.1 })
-          Cookies.set('expirationDateTimeJwtApplicationToken', res.expirationDateTimeAccessToken, { expires: 0.1 })
-          window.location.href = "./"
-        })
-        .catch((error) => {
-          useErrors(error);
-        })
+  const navigate = useNavigate()
 
-      return await result
-    },
-    logout: () => {
-      Cookies.remove('jwtApplicationToken');
-      Cookies.remove('expirationJwtApplicationToken');
-      Cookies.remove('expirationDateTimeJwtApplicationToken');
-      window.location.href = "./login"
-    },
+  async function signIn(props: LoginSchema) {
+    const result = loginService.loginPost(props)
+      .then(({ data }: Axios<BaseResponseApi<LoginEntity>
+      >
+      ) => {
+        setIsAuthenticated(true)
+        Cookies.set('userType', data.res.userType, { expires: 0.1 })
+        Cookies.set('jwtApplicationToken', data.res.accessToken, { expires: 0.1 })
+        Cookies.set('expirationJwtApplicationToken', data.res.expirationTimeAccessToken, { expires: 0.1 })
+        Cookies.set('expirationDateTimeJwtApplicationToken', data.res.expirationDateTimeAccessToken, { expires: 0.1 })
+        window.location.href = "/"
+      })
+      .catch((error) => {
+        useErrors(error);
+      })
+
+    return result
+  }
+
+  function logout() {
+    Cookies.remove('jwtApplicationToken');
+    Cookies.remove('expirationJwtApplicationToken');
+    Cookies.remove('expirationDateTimeJwtApplicationToken');
+    window.location.href = "/login"
+  }
+
+  const authContext: AuthContextType = {
+    signIn: signIn,
+    logout: logout,
     isAuthenticated: isAuthenticated
   }
 
@@ -52,17 +60,22 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const timeDiference = new Date(expirationDate).getTime() - new Date().getTime()
 
     setTimeout(() => {
-      if (token) {
-        authContext.logout()
+      if (token && authConfig.authorizeNotRequired.includes(window.location.pathname)) {
+        navigate("/")
       }
-      else if (!config.authorizeNotRequired.includes(window.location.pathname)&&!config.desactivateAuth ) {
-        navigate("/login")
+      if (token) {
+
+      }
+      else if (!authConfig.authorizeNotRequired.includes(window.location.pathname) && !authConfig.desactivateAuth) {
+        authContext.logout()
       }
     }, timeDiference);
   }, [])
 
   return (
-    <AuthContext.Provider value={authContext} children={children} />
+    <AuthContext.Provider value={authContext}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

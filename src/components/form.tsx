@@ -1,36 +1,27 @@
 import React from 'react'
+import useSelector from '../utils/hooks/use-selector'
 
-interface FormContainerProps {
+interface FormProps {
     className: string
-    onSubmit: () => {}
-    children:React.ReactNode
+    onSubmit: (e: any) => any
+    children: React.ReactNode
+    id?: string
 }
 
-interface FormVariation extends Omit<FormContainerProps, "className"> {
-
-}
-
-interface FormComponent extends FormVariation {
-    variation?: keyof typeof formsVariation;
-}
-
-function FormContainer(props: FormContainerProps) {
+function FormContainer(props: FormProps) {
     return (
-        <form className={props.className} onSubmit={props.onSubmit} >
+        <form id={props.id} className={props.className} onSubmit={props.onSubmit} >
             {props.children}
         </form>
     )
 }
 
-function Form(props: FormComponent) {
-    const Component = formsVariation[props.variation??"default"] 
-    return <Component {...props} />;
-}
-
-const formsVariation = {
-    default: (props: FormVariation) =>
+const formVariation = {
+    default: (props: FormProps) =>
         <FormContainer {...props} className='flex flex-col gap-3' />
 }
+
+const Form = useSelector<keyof typeof formVariation, FormProps>(formVariation)
 
 export {
     Form

@@ -1,38 +1,24 @@
 import React from 'react'
 import { LoaderCircle } from 'lucide-react';
+import useSelector from '../utils/hooks/use-selector';
 
-interface LoadingContainerProps {
-  visible: boolean
+interface LoadingProps {
   className:string
 }
 
-interface LoadingVariation extends Omit<LoadingContainerProps, "className"> {
-
-}
-
-interface LoadingComponent extends LoadingVariation  {
-  variation: keyof typeof loadingVariations;
-}
-
-const loadingVariations = {
-  default: (props: LoadingVariation) =>
-    <LoadingContainer {...props} className='mb-1 font-semibold px-1' />,
-}
-
-function LoadingContainer(props: LoadingContainerProps) {
+function LoadingContainer(props: LoadingProps) {
   return (
-    props.visible &&
     <div className={props.className}>
       <LoaderCircle />
     </div>
   )
 }
 
-function Loading(props: LoadingComponent) {
-  const Component = loadingVariations[props.variation] || loadingVariations.default;
-  return <Component {...props} />;
+const loadingVariations = {
+  default: (props: LoadingProps) =>
+    <LoadingContainer {...props} className='mb-1 font-semibold px-1 rotating-div text-white bg-transparent w-fit' />,
 }
 
-export {
-  Loading
-}
+const Loading = useSelector<keyof typeof loadingVariations,LoadingProps>(loadingVariations)
+
+export default Loading
