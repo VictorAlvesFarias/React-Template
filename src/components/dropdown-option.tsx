@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react"
-import useSelector from "../utils/hooks/use-selector"
+import { useSelector } from "../utils/hooks/selector-hooks"
 import { DropdownContextObject } from "./dropdown-context"
 import React from "react"
 
@@ -40,7 +40,7 @@ function OptionContainer(props: OptionProps) {
 
 const optionVaritions = {
     default: (props: OptionProps) =>
-        <OptionContainer {...props} className='h-8 pl-1 hover:bg-zinc-200 rounded cursor-pointer flex items-center' />,
+        <OptionContainer {...props} className='min-h-8 text-nowrap  hover:bg-zinc-200 rounded cursor-pointer flex items-center px-3' />,
 }
 
 const Option = useSelector<keyof typeof optionVaritions, OptionProps>(optionVaritions)

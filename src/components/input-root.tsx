@@ -1,5 +1,5 @@
 import React from "react"
-import useSelector from "../utils/hooks/use-selector"
+import { useSelector } from "../utils/hooks/selector-hooks"
 
 interface RootProps {
     className: string
@@ -16,9 +16,11 @@ function RootContainer(_: RootProps) {
 
 const rootVariations = {
     default: (props: RootProps) =>
-        <RootContainer {...props} className="flex-col flex relative text-zinc-200 w-full" />,
+        <RootContainer {...props} className="flex-col flex relative w-full" />,
+    "default-full": (props: RootProps) =>
+        <RootContainer {...props} className="flex-col flex relative w-full h-full" />,
     checkbox: (props: RootProps) =>
-        <RootContainer {...props} className="flex justify-between relative text-zinc-200 gap-3" />
+        <RootContainer {...props} className="flex justify-between relative gap-3" />
 }
 
 const InputRoot = useSelector<keyof typeof rootVariations,RootProps>(rootVariations)

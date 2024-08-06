@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { SidebarContextObject } from "./sidebar-context"
 import React from "react"
-import useSelector from "../utils/hooks/use-selector"
+import { useSelector } from "../utils/hooks/selector-hooks"
 
 interface HamburguerProps {
     className: string,
@@ -19,7 +19,7 @@ function HamburguerContainer(props: HamburguerProps) {
 
 const hamburguerVariations = {
     default: (props: HamburguerProps) =>
-        <HamburguerContainer {...props} className=" z-30 p-2 justify-end top-0 left-0 md:hidden fixed flex w-full bg-zinc-800 cursor-pointer " />
+        <HamburguerContainer {...props} className="md:hidden cursor-pointer" />
 }
 
 const SidebarHamburguer = useSelector<keyof typeof hamburguerVariations,HamburguerProps>(hamburguerVariations)

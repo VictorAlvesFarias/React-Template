@@ -1,5 +1,5 @@
 import React from "react";
-import useSelector from "../utils/hooks/use-selector";
+import { useSelector } from "../utils/hooks/selector-hooks";
 
 interface LabelProps {
     children: React.ReactNode

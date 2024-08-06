@@ -1,6 +1,6 @@
 import { Moon, Sun } from 'lucide-react';
 import React, { useState } from 'react';
-import useSelector from '../utils/hooks/use-selector';
+import { useSelector } from '../utils/hooks/selector-hooks';
 
 interface ToogleThemeProps {
   activateIcon: React.ReactNode

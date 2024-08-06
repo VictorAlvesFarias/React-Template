@@ -1,5 +1,5 @@
 import React, { LegacyRef, useContext, useEffect, useRef, useState } from 'react'
-import useSelector from '../utils/hooks/use-selector'
+import { useSelector } from '../utils/hooks/selector-hooks'
 import { ModalContextObject } from './modal-context'
 
 interface ModalRootProps {

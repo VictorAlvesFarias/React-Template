@@ -1,13 +1,13 @@
 import React from "react"
-import useSelector from "../utils/hooks/use-selector"
+import { useSelector } from "../utils/hooks/selector-hooks"
 
 interface TableBodyProps {
     children: React.ReactNode
-    className:string
+    className: string
 }
 
 
-function TableBodyContainer(props:TableBodyProps) {
+function TableBodyContainer(props: TableBodyProps) {
     return (
         <tbody className={props.className}>
             {props.children}
@@ -18,7 +18,7 @@ function TableBodyContainer(props:TableBodyProps) {
 
 const bodyVariations = {
     default: (props: TableBodyProps) =>
-        <TableBodyContainer {...props} className="divide-y divide-gray-200 h-fit" />
+        <TableBodyContainer {...props} className="divide-y divide-black divide-opacity-10 h-fit  rounded" />
 }
 
 const TableBody = useSelector<keyof typeof bodyVariations, TableBodyProps>(bodyVariations)

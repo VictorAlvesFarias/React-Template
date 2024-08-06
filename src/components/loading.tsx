@@ -1,6 +1,6 @@
 import React from 'react'
 import { LoaderCircle } from 'lucide-react';
-import useSelector from '../utils/hooks/use-selector';
+import { useSelector } from '../utils/hooks/selector-hooks';
 
 interface LoadingProps {
   className:string
