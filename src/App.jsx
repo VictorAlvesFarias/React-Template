@@ -1,14 +1,15 @@
 import './App.css';
 import Login from './pages/public/login';
-import AdminRouters from './routers/admin-routers';
+import AdminRouter from './routers/admin-routers';
+import UserRouter from './routes/user-router';
 import { AuthProvider } from './context/auth-context';
 import { ToastContainer } from 'react-toastify';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Cookies from 'js-cookie';
 import If from './components/if';
+import { cookiesService } from './services/cookies-service'
 
 function App() {
-  const userType = Cookies.get('userType')
+  const userType = cookiesService.get("userType")
 
   return (
     <Router>
@@ -19,10 +20,10 @@ function App() {
           <Route path="/*" element={
             <>
               <If conditional={userType == "admin"}>
-                <AdminRouters />
+                <AdminRouter />
               </If>
-              <If conditional={userType == "broker"}>
-                <AdminRouters />
+              <If conditional={userType == "user"}>
+                <UserRouter />
               </If>
             </>
           } />

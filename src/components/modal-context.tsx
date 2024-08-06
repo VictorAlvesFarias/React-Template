@@ -7,7 +7,7 @@ interface ModalContextType {
 }
 
 interface ModalContextComponent {
-    children: React.ReactNode[]
+    children: React.ReactNode[] | React.ReactNode 
 }
 
 function ModalContext(props: ModalContextComponent) {

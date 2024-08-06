@@ -1,5 +1,5 @@
 import React from "react"
-import useSelector from "../utils/hooks/use-selector"
+import { useSelector } from "../utils/hooks/selector-hooks"
 import { DropdownOption, OptionProps } from "./dropdown-option"
 
 interface DropdownMenuProps {
@@ -25,7 +25,7 @@ const dropdownMenuVariations = {
     default: (props: DropdownMenuProps) =>
         <DropdownMenuContainer
             {...props}
-            className='rounded border bg-zinc-100 border-black text-black indent-1 p-1 gap-2 mt-1 shadow-md'
+            className='rounded border bg-zinc-100 text-zinc-800 p-1 gap-2 mt-1 shadow-lg max-h-40 overflow-auto'
         />
 }
 

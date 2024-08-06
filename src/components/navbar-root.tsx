@@ -1,6 +1,6 @@
 import React from "react"
 import SidebarContext from "./sidebar-context"
-import useSelector from "../utils/hooks/use-selector"
+import { useSelector } from "../utils/hooks/selector-hooks"
 
 interface RootProps {
     className: string,
@@ -16,10 +16,12 @@ function RootContainer(props: RootProps) {
 }
 
 const rootVariations = {
-    default: (props: RootProps) =>
-        <RootContainer {...props} className="flex flex-col w-screen" />
 }
 
-const NavbarRoot = useSelector<keyof typeof rootVariations,RootProps>(rootVariations)
+const navbarRootSelector = (variations) => useSelector<keyof typeof rootVariations, RootProps>(variations)
 
-export default NavbarRoot
+export const NavbarRoot = navbarRootSelector({
+    default: (props: RootProps) =>
+        <RootContainer {...props} className="flex flex-col w-screen" />
+})
+

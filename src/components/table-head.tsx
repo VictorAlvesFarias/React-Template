@@ -1,13 +1,13 @@
 import React from "react"
-import useSelector from "../utils/hooks/use-selector"
+import { useSelector } from "../utils/hooks/selector-hooks"
 
 interface TableHeadProps {
     children: React.ReactNode
-    className:string
+    className: string
 }
 
 
-function TableHeadContainer(props:TableHeadProps) {
+function TableHeadContainer(props: TableHeadProps) {
     return (
         <thead className={props.className}>
             {props.children}
@@ -18,9 +18,9 @@ function TableHeadContainer(props:TableHeadProps) {
 
 const headVariations = {
     default: (props: TableHeadProps) =>
-        <TableHeadContainer {...props} className="min-w-full divide-b divide-gray-200 bg-zinc-100" />,
+        <TableHeadContainer {...props} className="min-w-full divide-b divide-opacity-10 " />,
     sticky: (props: TableHeadProps) =>
-        <TableHeadContainer {...props} className="min-w-full divide-b divide-gray-200 bg-zinc-100 sticky top-0 " />
+        <TableHeadContainer {...props} className="min-w-full divide-b divide-opacity-10  sticky top-0 " />
 }
 
 const TableHead = useSelector<keyof typeof headVariations, TableHeadProps>(headVariations)

@@ -1,7 +1,8 @@
 import { LucideLoaderCircle } from 'lucide-react';
 import React, { LegacyRef, forwardRef, useContext, useState } from 'react';
-import useSelector from '../utils/hooks/use-selector';
+import { useSelector } from '../utils/hooks/selector-hooks';
 import { AccordionContextObject } from './accordion-context';
+import { SidebarContextObject } from './sidebar-context';
 
 interface AccordionTitleProps {
     children: React.ReactNode
