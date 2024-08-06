@@ -1,0 +1,120 @@
+.button-default {
+    @apply bg-violet-500 text-nowrap px-2 w-full rounded shadow hover:bg-opacity-70 transition-all h-9 p-1 text-zinc-50 font-semibold flex justify-center items-center
+}
+
+.button-red {
+    @apply bg-red-500 px-2 w-full rounded shadow hover:bg-opacity-70 transition-all h-9 p-1 text-zinc-50 font-semibold flex justify-center items-center
+}
+
+.button-href {
+    @apply border-violet-500 p-2 px-3 rounded-full border text-sm bg-violet-500 bg-opacity-20 w-fit text-violet-500 hover:bg-opacity-30 transition-all
+}
+
+.card-default {
+    @apply p-6 flex-1 shadow-md h-full rounded bg-black bg-opacity-5 flex-col gap-3 flex
+}
+
+.card-table {
+    @apply px-6 inline-table
+}
+
+.content {
+    @apply h-full flex flex-col w-full relative pt-12 aria-hidden: hidden overflow-auto
+}
+
+.dropdown-menu-base {
+    @apply w-full flex flex-col
+}
+
+.dropdown-menu-default {
+    @apply rounded border bg-zinc-100 text-zinc-800 p-1 gap-2 mt-1 shadow-lg max-h-40 overflow-auto
+}
+
+.input-root-default {
+    @apply flex-col flex relative w-full;
+}
+
+.input-root-default-full {
+    @apply flex-col flex relative w-full h-full;
+}
+
+.input-root-checkbox {
+    @apply flex justify-between relative gap-3;
+}
+
+.input-label-default {
+    @apply mb-1 font-semibold px-1 text-zinc-800 text-sm;
+}
+
+.input-label-row {
+    @apply font-semibold px-1 text-zinc-800 text-sm;
+}
+
+.nav-bar-root-default {
+    @apply flex flex-col w-screen
+}
+
+.section-default {
+    @apply max-w-7xl w-11/12 h-full lg:px-0 px-5 py-16
+}
+
+.sidebar-content-default {
+    @apply h-full items-center justify-center flex-1 flex-col md:flex-rol overflow-auto bg-zinc-100 md:mt-0 relative;
+}
+
+.sidebar-menu-default {
+    @apply w-60 flex-col h-full p-2 bg-zinc-800 border-r-zinc-300 border-r gap-2
+}
+
+.sidebar-root-default {
+    @apply flex flex-col md:flex-row w-screen h-screen
+}
+
+.href-sidebar {
+    @apply text-md flex gap-3
+}
+
+.span-default {
+    @apply mb-1 font-semibold px-1;
+}
+
+.span-error {
+    @apply text-red-400;
+}
+
+.table-body-default {
+    @apply divide-y divide-black divide-opacity-10 h-fit rounded;
+}
+
+.table-cell-head {
+    @apply px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase;
+}
+
+.table-cell-body {
+    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-800;
+}
+
+.table-cell-body-end {
+    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-800 flex justify-end;
+}
+
+.table-head-default {
+    @apply min-w-full divide-b divide-opacity-10;
+}
+
+.table-head-sticky {
+    @apply min-w-full divide-b divide-opacity-10 sticky top-0;
+}
+
+.table-root-default {
+    @apply min-w-full divide-y h-fit divide-black divide-opacity-10;
+}
+
+.table-row-default {
+    @apply px-6;
+}
+
+.table-row-selectable {
+    @apply px-6 hover:bg-black hover:bg-opacity-10 cursor-pointer;
+    @apply aria-selected:bg-black aria-selected:bg-opacity-10;
+}
