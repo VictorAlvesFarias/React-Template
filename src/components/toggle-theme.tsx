@@ -27,16 +27,4 @@ function ToogleThemeContainer(props: ToogleThemeProps) {
   );
 }
 
-const toogleThemeVariations = {
-  default: (props: ToogleThemeProps) =>
-    <ToogleThemeContainer
-      callback={props.callback}
-      activateIcon={<Sun className='w-1/2' />}
-      desactivateIcon={<Moon className='w-1/2' />}
-      className='rounded-full w-14 bg-white dark:bg-zinc-200 p-1 flex items-center transition duration-300 focus:outline-none shadow'
-    />,
-}
-
-const ToogleTheme = useSelector<keyof typeof toogleThemeVariations,ToogleThemeProps>(toogleThemeVariations)
-
-export default ToogleTheme
+export default ToogleThemeContainer

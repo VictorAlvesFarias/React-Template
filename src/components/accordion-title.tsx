@@ -30,17 +30,4 @@ const AccordionTitleContainer = forwardRef((_: AccordionTitleProps, ref: LegacyR
     );
 })
 
-const AccordionTitleVariations = {
-    default: (props: AccordionTitleProps, ref: any) => {
-        return (
-            <AccordionTitleContainer
-                {...props}
-                ref={ref}
-                className='' />
-        )
-    }
-}
-
-const AccordionTitle = useSelector<keyof typeof AccordionTitleVariations, AccordionTitleProps>(AccordionTitleVariations)
-
-export default AccordionTitle
+export default AccordionTitleContainer

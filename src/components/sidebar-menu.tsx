@@ -31,19 +31,4 @@ function MenuContainer(props: MenuProps) {
     )
 }
 
-const menuVariations = {
-    default: (props: MenuProps) =>
-        <MenuContainer
-            {...props}
-            className="w-60 flex-col h-full p-2 bg-zinc-800 border-r-zinc-300 border-r gap-2"
-        />,
-    white: (props: MenuProps) =>
-        <MenuContainer
-            {...props}
-            className="w-60 flex-col h-full p-2 bg-zinc-100 border-r-zinc-300 border-r gap-2"
-        />
-}
-
-const SidebarMenu = useSelector<keyof typeof menuVariations, MenuProps>(menuVariations)
-
-export default SidebarMenu
+export default MenuContainer

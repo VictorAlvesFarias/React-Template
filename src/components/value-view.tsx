@@ -18,17 +18,4 @@ const ValueViewContainer = forwardRef((_: ValueViewProps, ref: LegacyRef<HTMLDiv
     );
 })
 
-const valueViewVariants = {
-    default: (props: ValueViewProps, ref: any) => {
-        return (
-            <ValueViewContainer
-                {...props}
-                ref={ref}
-                className=' text-zinc-800 min-h-9 rounded px-3 flex items-center bg-zinc-300 border-none shadow-sm ' />
-        )
-    }
-}
-
-const ValueView = useSelector<keyof typeof valueViewVariants, ValueViewProps>(valueViewVariants)
-
-export default ValueView
+export default ValueViewContainer

@@ -17,11 +17,4 @@ function HamburguerContainer(props: HamburguerProps) {
     )
 }
 
-const hamburguerVariations = {
-    default: (props: HamburguerProps) =>
-        <HamburguerContainer {...props} className="md:hidden cursor-pointer" />
-}
-
-const SidebarHamburguer = useSelector<keyof typeof hamburguerVariations,HamburguerProps>(hamburguerVariations)
-
-export default SidebarHamburguer
+export default HamburguerContainer

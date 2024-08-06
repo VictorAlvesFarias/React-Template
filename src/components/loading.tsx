@@ -14,11 +14,4 @@ function LoadingContainer(props: LoadingProps) {
   )
 }
 
-const loadingVariations = {
-  default: (props: LoadingProps) =>
-    <LoadingContainer {...props} className='mb-1 font-semibold px-1 rotating-div text-white bg-transparent w-fit' />,
-}
-
-const Loading = useSelector<keyof typeof loadingVariations,LoadingProps>(loadingVariations)
-
-export default Loading
+export default LoadingContainer

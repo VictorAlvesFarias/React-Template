@@ -33,19 +33,6 @@ const FormContainer = forwardRef((props: FormProps, ref: RefCallBack | LegacyRef
     )
 })
 
-const formVariation = {
-    default: (props: FormProps) =>
-        <FormContainer {...props} className='flex flex-col gap-3 p-6' />,
-    card: (props: FormProps) =>
-        <FormContainer {...props} className='flex flex-col gap-3 ' />,
-    "default-full": (props: FormProps) =>
-        <FormContainer {...props} className='flex flex-col gap-3 h-full w-full p-6' />,
-    row: (props: FormProps) =>
-        <FormContainer {...props} className='flex gap-3 p-6' />
-}
-
-const Form = useSelector<keyof typeof formVariation, FormProps>(formVariation)
-
 export {
-    Form
+    FormContainer
 }

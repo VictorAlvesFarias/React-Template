@@ -23,18 +23,4 @@ const AccordionContainer = forwardRef((_: AccordionProps, ref: LegacyRef<HTMLDiv
         </div>
     );
 })
-
-const AccordionVariations = {
-    default: (props: AccordionProps, ref: any) => {
-        return (
-            <AccordionContainer
-                {...props}
-                ref={ref}
-                className=' bg-black bg-opacity-15 rounded aria-hidden:mt-1 pr-3' />
-        )
-    }
-}
-
-const Accordion = useSelector<keyof typeof AccordionVariations, AccordionProps>(AccordionVariations)
-
-export default Accordion
+export default AccordionContainer

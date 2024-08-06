@@ -16,11 +16,4 @@ function AccordionRootContainer(_: AccordionRootProps) {
     )
 }
 
-const AccordionRootVariations = {
-    default: (props: AccordionRootProps) =>
-        <AccordionRootContainer {...props} className='flex-col flex ' />
-}
-
-const AccordionRoot = useSelector<keyof typeof AccordionRootVariations, AccordionRootProps>(AccordionRootVariations)
-
-export default AccordionRoot
+export default AccordionRootContainer

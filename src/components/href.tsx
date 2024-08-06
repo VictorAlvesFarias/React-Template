@@ -20,11 +20,4 @@ function HrefContainer(_: HrefProps) {
     )
 }
 
-const HrefVariations = {
-    default: (props: HrefProps) =>
-        <HrefContainer {...props} className='border-violet-500 p-2 px-3 rounded-full border text-sm bg-violet-500 bg-opacity-20 w-fit text-violet-500 hover:bg-opacity-30 transition-all' />,
-}
-
-const Href = useSelector<keyof typeof HrefVariations, HrefProps>(HrefVariations)
-
-export default Href
+export default HrefContainer

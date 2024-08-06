@@ -38,14 +38,7 @@ function OptionContainer(props: OptionProps) {
     )
 }
 
-const optionVaritions = {
-    default: (props: OptionProps) =>
-        <OptionContainer {...props} className='min-h-8 text-nowrap  hover:bg-zinc-200 rounded cursor-pointer flex items-center px-3' />,
-}
-
-const Option = useSelector<keyof typeof optionVaritions, OptionProps>(optionVaritions)
-
-export default Option
+export default OptionContainer
 
 export {
     DropdownOption,
