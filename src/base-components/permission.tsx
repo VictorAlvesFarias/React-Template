@@ -1,14 +1,13 @@
-import React, { useContext } from "react"
-import { AuthContext } from "../auth/auth-context"
-import { IClaimsKeys } from "../interfaces/shared/claims"
+import React from "react"
 import { useAuthenticateComponent } from "../utils/hooks/permission-hooks"
+import IClaimsKeys from "../interfaces/shared/claims"
 
-interface PermissionProps {
+interface IPermissionProps {
     claim: IClaimsKeys | undefined | IClaimsKeys[]
     children: React.ReactNode
 }
 
-function Permission(props: PermissionProps) {
+function Permission(props: IPermissionProps) {
     const isAuthenticated = useAuthenticateComponent(props.claim)
 
     return (
@@ -20,3 +19,7 @@ function Permission(props: PermissionProps) {
 }
 
 export default Permission
+
+export {
+    IPermissionProps
+}

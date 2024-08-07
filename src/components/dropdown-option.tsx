@@ -1,53 +1,12 @@
-import { useContext, useEffect } from "react"
-import { useSelector } from "../utils/hooks/selector-hooks"
-import { DropdownContextObject } from "./dropdown-context"
 import React from "react"
-
-interface DropdownOption {
-    value: any,
-    label: string,
-}
-
-interface OptionProps {
-    value: any,
-    label: string,
-    onClick?: (e: DropdownOption | any) => any,
-    className: string
-    defaultValue?: boolean
-}
-
-function OptionContainer(props: OptionProps) {
-    const { setOpen, setSelected, selected } = useContext(DropdownContextObject)
-
-    function handleSetOption() {
-        props.onClick ? props.onClick(props.value) : null
-        setSelected(props)
-        setOpen(false)
-    }
-
-    useEffect(() => {
-        if (props.defaultValue==true&&(selected==null || selected == undefined) ) {
-            setSelected(props)
-        }
-    }, [])
-
-    return (
-        <span onClick={handleSetOption} className={props.className} >
-            {props.label}
-        </span>
-    )
-}
+import DropdownOptionContainer, { IDropdownOptionContainerProps } from "../base-components/dropdown-option"
+import { useSelector } from "../utils/hooks/selector-hooks"
 
 const optionVaritions = {
-    default: (props: OptionProps) =>
-        <OptionContainer {...props} className='min-h-8 text-nowrap  hover:bg-zinc-200 rounded cursor-pointer flex items-center px-3' />,
+    default: (props: IDropdownOptionContainerProps) =>
+        <DropdownOptionContainer {...props} className='min-h-8 text-nowrap  hover:bg-zinc-200 rounded cursor-pointer flex items-center px-3' />,
 }
 
-const Option = useSelector<keyof typeof optionVaritions, OptionProps>(optionVaritions)
+const Option = useSelector<keyof typeof optionVaritions, IDropdownOptionContainerProps>(optionVaritions)
 
 export default Option
-
-export {
-    DropdownOption,
-    OptionProps
-}

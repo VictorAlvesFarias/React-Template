@@ -1,26 +1,11 @@
-import React, { LegacyRef, useContext, useEffect, useRef, useState } from 'react'
-import { useSelector } from '../utils/hooks/selector-hooks'
-import { AccordionContextObject } from './accordion-context'
-
-interface AccordionRootProps {
-    callback?: () => {},
-    className: string,
-    children: React.ReactNode
-}
-
-function AccordionRootContainer(_: AccordionRootProps) {
-    return (
-        <div {..._}>
-            {_.children}
-        </div>
-    )
-}
+import React from "react"
+import { useSelector } from "../utils/hooks/selector-hooks"
 
 const AccordionRootVariations = {
-    default: (props: AccordionRootProps) =>
-        <AccordionRootContainer {...props} className='flex-col flex ' />
+    default: (props: React.HTMLAttributes<HTMLDivElement>) =>
+        <div {...props} className='flex-col flex ' />
 }
 
-const AccordionRoot = useSelector<keyof typeof AccordionRootVariations, AccordionRootProps>(AccordionRootVariations)
+const AccordionRoot = useSelector<keyof typeof AccordionRootVariations, React.HTMLAttributes<HTMLDivElement>>(AccordionRootVariations)
 
 export default AccordionRoot

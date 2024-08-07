@@ -1,8 +1,7 @@
 import React from "react";
 import { forwardRef } from "react";
-import { IClaimsKeys } from "../../interfaces/shared/claims";
-import Permission from "../../components/Permission";
 import { useAuthenticateComponent } from "./permission-hooks";
+import IClaimsKeys from "../../interfaces/shared/claims";
 
 function useSelector<T, K>(components) {
     type Selector = K & {

@@ -1,12 +1,12 @@
 import React from "react"
 import { createContext, useState } from "react"
-import { DropdownOption } from "./dropdown-option"
+import { IDropdownOptionValue } from "./dropdown-option"
 
 interface DropdownContextType {
     setOpen: (e: boolean) => any
     open: boolean
-    selected: DropdownOption | undefined
-    setSelected: (e: DropdownOption) => any
+    selected: IDropdownOptionValue | undefined
+    setSelected: (e: IDropdownOptionValue) => any
 }
 
 interface DropdownContextComponent {
@@ -15,7 +15,7 @@ interface DropdownContextComponent {
 
 function DropdownContext(props: DropdownContextComponent) {
     const [open, setOpen] = useState<boolean>(false)
-    const [selected, setSelected] = useState<DropdownOption>()
+    const [selected, setSelected] = useState<IDropdownOptionValue>()
     const context: DropdownContextType = {
         setOpen:setOpen,
         open: open,

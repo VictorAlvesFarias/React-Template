@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Link } from 'react-router-dom'
 import { LucideCheck } from 'lucide-react'
 import { AuthContext } from '../../../auth/auth-context'
-import { Form } from '../../../components/form';
+import Form from '../../../components/form';
 import Button from '../../../components/button';
 import InputRoot from '../../../components/input-root'
 import Span from '../../../components/span'

@@ -1,24 +1,11 @@
 import React from "react"
 import { useSelector } from "../utils/hooks/selector-hooks"
 
-interface HrefProps {
-    className: string,
-    children: React.ReactNode
-}
-
-function HrefContainer(props: HrefProps) {
-    return (
-        <p className={props.className}>
-            {props.children}
-        </p>
-    )
-}
-
 const hrefVariations = {
-    default: (props: HrefProps) =>
-        <HrefContainer {...props} className=" text-md flex gap-3" />
+    default: (props: React.HTMLAttributes<HTMLDivElement>) =>
+        <div {...props} className=" text-md flex gap-3" />
 }
 
-const SidebarHref = useSelector<keyof typeof hrefVariations, HrefProps>(hrefVariations)
+const SidebarHref = useSelector<keyof typeof hrefVariations, React.HTMLAttributes<HTMLDivElement>>(hrefVariations)
 
 export default SidebarHref
