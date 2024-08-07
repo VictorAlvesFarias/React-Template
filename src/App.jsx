@@ -1,11 +1,11 @@
 import './App.css';
-import Login from './pages/public/login';
-import AdminRouter from './routers/admin-routers';
+import Login from './pages/shared/login/login';
+import AdminRouter from './routers/admin-router';
 import UserRouter from './routes/user-router';
-import { AuthProvider } from './context/auth-context';
+import { AuthProvider } from './auth/auth-context';
 import { ToastContainer } from 'react-toastify';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import If from './components/if';
+import If from './base-components/if';
 import { cookiesService } from './services/cookies-service'
 
 function App() {

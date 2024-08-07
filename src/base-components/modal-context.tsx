@@ -1,18 +1,18 @@
 import React from "react"
 import { createContext, useState } from "react"
 
-interface ModalContextType {
+interface IModalContextType {
     setOpen: (e: boolean) => any
     open: boolean
 }
 
-interface ModalContextComponent {
-    children: React.ReactNode[] | React.ReactNode 
+interface IModalContextComponent {
+    children: React.ReactNode[] | React.ReactNode
 }
 
-function ModalContext(props: ModalContextComponent) {
+function ModalContext(props: IModalContextComponent) {
     const [open, setOpen] = useState<boolean>(false)
-    const context: ModalContextType = {
+    const context: IModalContextType = {
         setOpen: (e) => { setOpen(e) },
         open: open
     }
@@ -20,7 +20,7 @@ function ModalContext(props: ModalContextComponent) {
     return <ModalContextObject.Provider value={context} children={props.children} />
 }
 
-const ModalContextObject = createContext<ModalContextType>({
+const ModalContextObject = createContext<IModalContextType>({
     open: false,
     setOpen: () => { }
 });
@@ -28,5 +28,6 @@ const ModalContextObject = createContext<ModalContextType>({
 export default ModalContext
 
 export {
-    ModalContextObject
+    ModalContextObject,
+    ModalContext
 }

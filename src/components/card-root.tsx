@@ -1,27 +1,11 @@
 import React from "react"
 import { useSelector } from "../utils/hooks/selector-hooks"
 
-interface CardProps {
-    ref?: any,
-    value?: any
-    className: string
-    children: React.ReactNode
-}
-
-function CardRootContainer(props: CardProps) {
-    return (
-        <div {...props} />
-    )
-}
-
 const CardRootVariations = {
-    default: (props: CardProps) =>
-        <CardRootContainer
-            {...props}
-            className={"px-6 inline-table"}
-        />,
+    default: (props: React.HTMLAttributes<HTMLDivElement>) =>
+        <div {...props} className={"px-6 inline-table"} />,
 }
 
-const CardRoot = useSelector<keyof typeof CardRootVariations, CardProps>(CardRootVariations)
+const CardRoot = useSelector<keyof typeof CardRootVariations, React.HTMLAttributes<HTMLDivElement>>(CardRootVariations)
 
 export default CardRoot

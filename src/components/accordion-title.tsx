@@ -1,37 +1,9 @@
-import { LucideLoaderCircle } from 'lucide-react';
-import React, { LegacyRef, forwardRef, useContext, useState } from 'react';
-import { useSelector } from '../utils/hooks/selector-hooks';
-import { AccordionContextObject } from './accordion-context';
-import { SidebarContextObject } from './sidebar-context';
-
-interface AccordionTitleProps {
-    children: React.ReactNode
-    className: string
-    ref: any
-    onClick?: (e: any) => any
-}
-
-const AccordionTitleContainer = forwardRef((_: AccordionTitleProps, ref: LegacyRef<HTMLDivElement>) => {
-    const {open,setOpen} = useContext(AccordionContextObject)
-
-    function handleOpenAccordionTitle(e:any) {
-        setOpen(!open)
-        _.onClick?_.onClick(e):null
-    }
-
-    return (
-        <div
-            ref={ref}
-            className={_.className}
-            onClick={handleOpenAccordionTitle}
-        >
-            {_.children}
-        </div>
-    );
-})
+import React from "react"
+import AccordionTitleContainer, { IAccordionTitleContainerProps } from '../base-components/accordion-title'
+import { useSelector } from "../utils/hooks/selector-hooks"
 
 const AccordionTitleVariations = {
-    default: (props: AccordionTitleProps, ref: any) => {
+    default: (props: IAccordionTitleContainerProps, ref: any) => {
         return (
             <AccordionTitleContainer
                 {...props}
@@ -41,6 +13,6 @@ const AccordionTitleVariations = {
     }
 }
 
-const AccordionTitle = useSelector<keyof typeof AccordionTitleVariations, AccordionTitleProps>(AccordionTitleVariations)
+const AccordionTitle = useSelector<keyof typeof AccordionTitleVariations, IAccordionTitleContainerProps>(AccordionTitleVariations)
 
 export default AccordionTitle

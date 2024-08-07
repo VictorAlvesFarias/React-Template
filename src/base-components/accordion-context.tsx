@@ -1,18 +1,18 @@
 import React from "react"
 import { createContext, useState } from "react"
 
-interface AccordionContextType {
+interface IAccordionContext {
     setOpen: (e: boolean) => any
     open: boolean
 }
 
-interface AccordionContextComponent {
+interface IAccordionContextComponent {
     children: React.ReactNode[] | React.ReactNode
 }
 
-function AccordionContext(props: AccordionContextComponent) {
+function AccordionContext(props: IAccordionContextComponent) {
     const [open, setOpen] = useState<boolean>(false)
-    const context: AccordionContextType = {
+    const context: IAccordionContext = {
         setOpen: (e) => { setOpen(e) },
         open: open
     }
@@ -20,7 +20,7 @@ function AccordionContext(props: AccordionContextComponent) {
     return <AccordionContextObject.Provider value={context} children={props.children} />
 }
 
-const AccordionContextObject = createContext<AccordionContextType>({
+const AccordionContextObject = createContext<IAccordionContext>({
     open: false,
     setOpen: () => { }
 });
@@ -28,5 +28,6 @@ const AccordionContextObject = createContext<AccordionContextType>({
 export default AccordionContext
 
 export {
-    AccordionContextObject
+    AccordionContextObject,
+    IAccordionContextComponent
 }

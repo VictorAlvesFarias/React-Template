@@ -2,26 +2,26 @@ import React from "react"
 import { createContext, useState } from "react"
 import { useLocation } from "react-router-dom"
 
-interface ContextType {
+interface ISidebarContext {
     open: boolean
     setOpen: (e: boolean) => any
     selected: string
 }
 
-interface ContextComponent {
+interface ISiderbarContextComponent {
     children: React.ReactNode
 }
 
-const SidebarContextObject = createContext<ContextType>({
+const SidebarContextObject = createContext<ISidebarContext>({
     open: true,
     setOpen: () => { },
     selected: ""
 });
 
-function SidebarContext(props: ContextComponent) {
+function SidebarContext(props: ISiderbarContextComponent) {
     const [open, setOpen] = useState(false)
     const { pathname } = useLocation()
-    const context: ContextType = {
+    const context: ISidebarContext = {
         open: open,
         setOpen: (e) => { setOpen(e) },
         selected: pathname
@@ -33,5 +33,7 @@ function SidebarContext(props: ContextComponent) {
 export default SidebarContext
 
 export {
-    SidebarContextObject
+    SidebarContextObject,
+    ISidebarContext,
+    ISiderbarContextComponent
 }

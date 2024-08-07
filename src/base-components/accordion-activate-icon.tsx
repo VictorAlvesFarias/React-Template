@@ -1,11 +1,11 @@
 import React, { useContext } from "react"
 import { AccordionContextObject } from "./accordion-context"
 
-interface AccordionActivateIconProps {
+interface IAccordionActivateIconProps {
     children: React.ReactNode
 }
 
-function AccordionActivateIcon(props: AccordionActivateIconProps) {
+function AccordionActivateIcon(props: IAccordionActivateIconProps) {
     const {open} = useContext(AccordionContextObject)
 
     return (
@@ -17,3 +17,7 @@ function AccordionActivateIcon(props: AccordionActivateIconProps) {
 }
 
 export default AccordionActivateIcon
+
+export {
+    IAccordionActivateIconProps
+}
