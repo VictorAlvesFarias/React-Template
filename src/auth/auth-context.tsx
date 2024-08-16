@@ -18,12 +18,13 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const permissions = Cookies.get('claims');
   const loginService = new LoginService()
   const [isAuthenticated, setIsAuthenticated] = useState(!!token);
+  const [timeoutStarted, setTimeoutStarted] = useState(false);
   const [permissionsContext, setPermissionsContext] = useState(JSON.parse(permissions ?? "{}"));
   const navigate = useNavigate()
 
   function signIn(data) {
     const result = loginService.loginPost(data)
-      .then((data) => {
+      .then(({ res: data }) => {
         setIsAuthenticated(true)
         setPermissionsContext(data.claims)
 
@@ -31,10 +32,10 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         keys.forEach(e => {
           if (typeof data[e] == "object") {
-            Cookies.set(e, JSON.stringify(data[e]))
+            Cookies.set(e, JSON.stringify(data[e]), { expires: Number(data.expirationTimeAccessToken) })
           }
           else {
-            Cookies.set(e, data[e])
+            Cookies.set(e, data[e], { expires: Number(data.expirationTimeAccessToken) })
           }
         })
 
@@ -61,19 +62,26 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const expirationDate: any = Cookies.get("expirationDateTimeAccessToken")
-    const timeDiference = new Date(expirationDate).getTime() - new Date().getTime()
 
-    setTimeout(() => {
-      if (token && AUTH.AUTHORIZE_NOT_REQUIRED.includes(window.location.pathname)) {
-        navigate("/")
-      }
-      if (token) {
-
-      }
-      else if (!AUTH.AUTHORIZE_NOT_REQUIRED.includes(window.location.pathname) && !AUTH.DISABLE_AUTH) {
+    if ((expirationDate == null || expirationDate == undefined) || token == null || token == undefined) {
+      if (!AUTH.AUTHORIZE_NOT_REQUIRED.includes(window.location.pathname)) {
         authContext.logout()
       }
-    }, timeDiference);
+    }
+    else if (token) {
+      const timeDiference = new Date(expirationDate).getTime() - new Date().getTime()
+
+      if (AUTH.AUTHORIZE_NOT_REQUIRED.includes(window.location.pathname)) {
+        navigate("/")
+      }
+
+      if (!timeoutStarted) {
+        setTimeoutStarted(true)
+        setTimeout(() => {
+          authContext.logout()
+        }, timeDiference);
+      }
+    }
   }, [])
 
   return (
