@@ -4,18 +4,18 @@ import { useErrors } from '../utils/hooks/errors-hooks'
 import { IBaseResponseApi } from '../interfaces/shared/base-response-api'
 import { Axios as IAxios } from '../interfaces/shared/axios'
 
-interface Route {
+export interface Route {
     api: string
     href: string
     params?: any
 }
 
-class BaseService {
+export class BaseService {
     protected token: string
     protected axios: Axios
     protected config: AxiosRequestConfig
 
-    constructor(config?: any, token?: any) {
+    constructor(config?: AxiosRequestConfig, token?: any) {
         this.axios = axios
         this.token = token ?? `Bearer ${Cookies.get("accessToken")}`
         this.config = config ?? {
@@ -39,7 +39,11 @@ class BaseService {
             }
         )
             .then((response: IAxios<IBaseResponseApi<T>>) => {
-                return response.data.data
+                return {
+                    res: response.data.data,
+                    pages: response.data.pages,
+                    currentPage: response.data.currentPage
+                }
             })
             .catch((error) => {
                 useErrors(error)
@@ -52,7 +56,11 @@ class BaseService {
     protected patch<T>(route: Route, body: any) {
         const result = axios.patch(this.route(route), body, this.config)
             .then((response: IAxios<IBaseResponseApi<T>>) => {
-                return response.data.data
+                return {
+                    res: response.data.data,
+                    pages: response.data.pages,
+                    currentPage: response.data.currentPage
+                }
             })
             .catch((error) => {
                 useErrors(error)
@@ -62,8 +70,8 @@ class BaseService {
         return result
     }
 
-    protected get<T>(route: Route) {
-        const result = axios.get(this.route(route), this.config)
+    protected get<T>(route: Route, config?: AxiosRequestConfig) {
+        const result = axios.get(this.route(route), { ...this.config, ...config })
             .then((response: IAxios<IBaseResponseApi<T>>) => {
                 return {
                     res: response.data.data,
@@ -111,29 +119,37 @@ class BaseService {
         return result
     }
 
-    private urlParams(params) {
+    protected urlParams(params) {
         if (params) {
             const keys = Object.keys(params)
             if (keys.length > 0) {
                 const stringParams = keys.map(e => {
-                    if (Array.isArray(params[e])) {
-                        params[e].forEach(i => {
-                            e + "=" + i
-                        });
+                    if ((typeof params[e] == "string" && params[e] != null && params[e]?.trim() != "")) {
+                        if (Array.isArray(params[e])) {
+                            params[e].forEach(i => {
+                                e + "=" + i
+                            });
+                        }
+                        else {
+                            return e + "=" + params[e]
+                        }
                     }
                     else {
-                        return e + "=" + params[e]
+                        if (Array.isArray(params[e])) {
+                            params[e].forEach(i => {
+                                e + "=" + i
+                            });
+                        }
+                        else {
+                            return e + "=" + params[e]
+                        }
                     }
                 });
 
-                return "?" + stringParams.join("&")
+                return "?" + stringParams.filter(e => e != null).join("&")
             }
         }
 
         return ""
     }
-}
-
-export {
-    BaseService
 }

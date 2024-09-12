@@ -37,25 +37,22 @@ function pagesCounter(page: number, totalPages: number, counter: number) {
 }
 
 function usePagination(props?: IUsepaginaionProps) {
-    const [callback, setCallback] = useState(props?.callback)
     const [page, setPage] = useState(props?.page ?? 1)
     const [totalPages, setTotalPages] = useState(props?.totalPages ?? 0)
     const [counter, setCounter] = useState(props?.counter ?? 2)
 
     function handleSetCallback(newCallback: Function) {
-        setCallback(() => newCallback)
+        useEffect(() => {
+            if (newCallback)  {
+                newCallback()
+            }
+        }, [page])
     }
     function handleSetPage(value) {
         if (value != page) {
             setPage(value)
         }
     }
-
-    useEffect(() => {
-        if (callback) {
-            callback()
-        }
-    }, [page])
 
     return {
         pages: pagesCounter(page, totalPages, counter),
