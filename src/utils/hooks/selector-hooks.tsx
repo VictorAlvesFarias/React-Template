@@ -12,11 +12,11 @@ function useSelector<T, K>(components) {
     };
 
     const Data = forwardRef((e: Omit<Selector, "className">, ref) => {
-        const isAuthenticated = useAuthenticateComponent(e.claim)
+        const isAuthenticated = useAuthenticateComponent()
 
         return (
             e.locked ?
-                isAuthenticated() && components[e.variation ?? "default"](e, ref)
+                isAuthenticated(e.claim) && components[e.variation ?? "default"](e, ref)
                 : components[e.variation ?? "default"](e, ref)
         )
     })

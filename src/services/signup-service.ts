@@ -2,10 +2,9 @@
 import axios from 'axios';
 import { env } from '../environment';
 import { BaseService } from './base-service';
-import { SignupSchema } from '../pages/shared/signup';
 
 class SignupService extends BaseService{
-  async signupPost(data: SignupSchema) {
+  async signupPost(data) {
     const result = this.post({api:env,href:"",params:""},
       {
         username: data.email,
