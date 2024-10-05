@@ -8,7 +8,7 @@ const AccordionVariations = {
             <AccordionContainer
                 {...props}
                 ref={ref}
-                className=' bg-black bg-opacity-15 rounded aria-hidden:mt-1 pr-3' />
+                className=' bg-black bg-opacity-20 rounded aria-hidden:mt-1 pr-3' />
         )
     }
 }

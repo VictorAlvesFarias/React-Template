@@ -56,9 +56,9 @@ function Login() {
     <section className="min-h-screen flex-col w-full flex items-center justify-center gap-6 bg-zinc-100 p-3">
       <Section>
         <div className='flex items-center justify-center gap-6 flex-col'>
-          <h1 className='font-semibold text-2xl'>Bem vindo</h1>
           <div className='gap-3 flex flex-col bg-white shadow-sm rounded sm:px-12 px-6 py-12  sm:w-fit w-full   '>
             <Form onSubmit={handleSubmit(handleSingIn)}>
+              <h1 className='font-semibold text-2xl'>Bem vindo</h1>
               <InputRoot>
                 <Label>E-Mail</Label>
                 <InputText placeholder='E-Mail' {...register('email')} />
@@ -72,13 +72,13 @@ function Login() {
               <Button loading={loading.login}>
                 Entrar
               </Button>
+              <InputRoot variation='checkbox'>
+                <Checkbox data={""} value={rememberMe} onChange={handleSetRememberMe} >
+                  <LucideCheck className='w-3 h-3' />
+                </Checkbox>
+                <Label variation='row'>Manter Conectado</Label>
+              </InputRoot>
             </Form>
-            <InputRoot variation='checkbox'>
-              <Checkbox data={""} value={rememberMe} onChange={handleSetRememberMe} >
-                <LucideCheck className='w-3 h-3' />
-              </Checkbox>
-              <Label variation='row'>Manter Conectado</Label>
-            </InputRoot>
           </div>
           <div className='flex gap-1 text-sm flex-wrap'>
             <p>Não possui uma conta?</p>

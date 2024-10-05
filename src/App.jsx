@@ -1,35 +1,30 @@
 import './App.css';
 import Login from './pages/shared/login/login';
-import AdminRouter from './routes/admin-router';
+import Signup from './pages/shared/signup/signup';
 import UserRouter from './routes/user-router';
 import { AuthProvider } from './auth/auth-context';
 import { ToastContainer } from 'react-toastify';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import If from './base-components/if';
 import { cookiesService } from './services/cookies-service'
+import { Provider as ReduxProvider } from 'react-redux';
+import { store } from './store';
 
 function App() {
   const userType = cookiesService.get("userType")
 
   return (
-    <Router>
-      <AuthProvider>
-        <ToastContainer />
-        <Routes>
-          <Route path="login" element={<Login />} />
-          <Route path="/*" element={
-            <>
-              <If conditional={userType == "admin"}>
-                <AdminRouter />
-              </If>
-              <If conditional={userType == "user"}>
-                <UserRouter />
-              </If>
-            </>
-          } />
-        </Routes>
-      </AuthProvider>
-    </Router>
+    <ReduxProvider store={store}>
+      <Router>
+        <AuthProvider>
+          <ToastContainer />
+          <Routes>
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
+            <Route path="/*" element={<UserRouter />} />
+          </Routes>
+        </AuthProvider>
+      </Router>
+    </ReduxProvider>
   );
 }
 

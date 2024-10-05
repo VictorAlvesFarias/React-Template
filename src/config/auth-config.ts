@@ -3,7 +3,7 @@ const AUTH = {
     "/login",
     "/signup",
   ],
-  DISABLE_AUTH: false,
+  DISABLE_AUTH: true,
   STARTER_LENGHT_HISTORY: window.history.length
 }
 

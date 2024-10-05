@@ -10,8 +10,7 @@ function useSelector<T, K>(components) {
         claim?: IClaimsKeys | IClaimsKeys[]
         locked?: boolean
     };
-
-    const Data = forwardRef((e: Omit<Selector, "className">, ref) => {
+    const Data = forwardRef<any, Omit<Selector, "className">>((e, ref) => {
         const isAuthenticated = useAuthenticateComponent()
 
         return (

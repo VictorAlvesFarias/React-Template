@@ -56,14 +56,14 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const authContext: AuthContextType = {
     signIn: signIn,
     logout: logout,
-    isAuthenticated: isAuthenticated,
+    isAuthenticated: isAuthenticated || AUTH.DISABLE_AUTH,
     permissions: permissionsContext
   }
 
   useEffect(() => {
     const expirationDate: any = Cookies.get("expirationDateTimeAccessToken")
 
-    if ((expirationDate == null || expirationDate == undefined) || token == null || token == undefined) {
+    if (((expirationDate == null || expirationDate == undefined) || token == null || token == undefined) && AUTH.DISABLE_AUTH == false) {
       if (!AUTH.AUTHORIZE_NOT_REQUIRED.includes(window.location.pathname)) {
         authContext.logout()
       }
