@@ -2,16 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .rotating-div {
-    animation: spin 1s linear infinite; /* Aplica a animação de rotação */
+  animation: spin 1s linear infinite;
+  /* Aplica a animação de rotação */
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+    /* Começa a girar a partir de 0 graus */
   }
-  
-  @keyframes spin {
-    from {
-      transform: rotate(0deg); /* Começa a girar a partir de 0 graus */
-    }
-    to {
-      transform: rotate(360deg); /* Gira a 360 graus */
-    }
+
+  to {
+    transform: rotate(360deg);
+    /* Gira a 360 graus */
   }
-  
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

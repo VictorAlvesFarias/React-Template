@@ -7,7 +7,7 @@ const rootVariations = {
     "default-full": (props: React.HTMLAttributes<HTMLDivElement>) =>
         <div {...props} className="flex-col flex relative w-full h-full" />,
     checkbox: (props: React.HTMLAttributes<HTMLDivElement>) =>
-        <div {...props} className="flex justify-between relative gap-3" />
+        <div {...props} className="flex relative gap-3" />
 }
 
 const InputRoot = useSelector<keyof typeof rootVariations, React.HTMLAttributes<HTMLDivElement>>(rootVariations)

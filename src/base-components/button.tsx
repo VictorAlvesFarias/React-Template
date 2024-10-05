@@ -11,7 +11,7 @@ interface IButtonContainerProps {
   form?: string
 }
 
-const ButtonContainer = forwardRef((_: IButtonContainerProps, ref: LegacyRef<HTMLButtonElement>) => {
+const ButtonContainer = forwardRef<LegacyRef<HTMLButtonElement> | any, IButtonContainerProps>((_, ref?) => {
   return (
     <button
       ref={ref}

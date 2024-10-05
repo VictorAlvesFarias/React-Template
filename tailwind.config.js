@@ -1,13 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./*.{js,ts,jsx,tsx,html}",
     "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  plugins:[
   ],
   theme: {
     extend: {
-    },
+      colors:{
+        'oikos-green':'#0a4879',
+        'oikos-white-blue':'#6280c4',
+        'oikos-midle-blue':'#0071BD'
+      },
+
+    }
   }
 }

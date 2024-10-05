@@ -3,7 +3,7 @@ import { ModalContextObject } from './modal-context'
 
 interface IModalRootContainerProps {
     callback?: () => {},
-    className: string,
+    className?: string,
     children: React.ReactNode
 }
 

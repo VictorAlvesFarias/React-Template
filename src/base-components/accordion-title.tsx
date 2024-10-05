@@ -8,7 +8,7 @@ interface IAccordionTitleContainerProps {
     onClick?: (e: any) => any
 }
 
-const AccordionTitleContainer = forwardRef((_: IAccordionTitleContainerProps, ref: LegacyRef<HTMLDivElement>) => {
+const AccordionTitleContainer = forwardRef<LegacyRef<HTMLDivElement> | any, IAccordionTitleContainerProps>((_, ref) => {
     const { open, setOpen } = useContext(AccordionContextObject)
 
     function handleOpenAccordionTitle(e: any) {
