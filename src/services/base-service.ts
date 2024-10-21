@@ -121,32 +121,23 @@ export class BaseService {
 
     protected urlParams(params) {
         if (params) {
-            const keys = Object.keys(params)
+            const keys = Object.keys(params);
             if (keys.length > 0) {
                 const stringParams = keys.map(e => {
-                    if ((typeof params[e] == "string" && params[e] != null && params[e]?.trim() != "")) {
-                        if (Array.isArray(params[e])) {
-                            params[e].forEach(i => {
-                                e + "=" + i
-                            });
-                        }
-                        else {
-                            return e + "=" + params[e]
-                        }
-                    }
+                    if (typeof params[e] === "string" && params[e]?.trim() !== "") {
+
+                        return `${e}=${params[e]}`;
+                    } 
+                    else if (Array.isArray(params[e])) {
+                        return params[e].map(i => `${e}=${i}`).join("&");
+                    } 
                     else {
-                        if (Array.isArray(params[e])) {
-                            params[e].forEach(i => {
-                                e + "=" + i
-                            });
-                        }
-                        else {
-                            return e + "=" + params[e]
-                        }
+    
+                        return `${e}=${params[e]}`;
                     }
                 });
-
-                return "?" + stringParams.filter(e => e != null).join("&")
+        
+                return "?" + stringParams.filter(e => e != null).join("&");
             }
         }
 

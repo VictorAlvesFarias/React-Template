@@ -55,7 +55,7 @@ const TextContainer = forwardRef((props: ITextContainerProps, ref: RefCallBack |
         >
             <input
                 {...props}
-                className="bg-transparent outline-none w-full h-full"
+                className="bg-transparent outline-none w-full h-full flex "
                 placeholder={props.placeholder}
                 ref={handleRef}
                 onChange={handleOnChange}

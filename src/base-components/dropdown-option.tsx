@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react"
 import { DropdownContextObject } from "./dropdown-context"
 import React from "react"
+import { useEffectLog } from "../utils/hooks/log-hooks"
 
 interface IDropdownOptionValue {
     value: any,
@@ -10,24 +11,25 @@ interface IDropdownOptionValue {
 interface IDropdownOptionContainerProps {
     value: any,
     label: string,
-    onClick?: (e: IDropdownOptionValue | any) => any,
-    className: string
+    className?: string
     defaultValue?: boolean
 }
 
 function DropdownOptionContainer(props: IDropdownOptionContainerProps) {
-    const { setOpen, setSelected, selected } = useContext(DropdownContextObject)
+    const { setOpen, setSelected, selected, setFilter } = useContext(DropdownContextObject)
 
     function handleSetOption() {
-        props.onClick ? props.onClick(props.value) : null
         setSelected(props)
+        setFilter("")
         setOpen(false)
     }
 
     useEffect(() => {
-        if (props.defaultValue == true && (selected == null || selected == undefined)) {
+        if (selected?.value == props.value) {
             setSelected(props)
+            setFilter("")
         }
+
     }, [])
 
     return (
