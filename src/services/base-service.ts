@@ -1,4 +1,4 @@
-import axios, { Axios, AxiosProgressEvent, AxiosRequestConfig } from 'axios'
+import axios, { Axios, AxiosHeaders, AxiosProgressEvent, AxiosRequestConfig } from 'axios'
 import Cookies from 'js-cookie'
 import { useErrors } from '../utils/hooks/errors-hooks'
 import { IBaseResponseApi } from '../interfaces/shared/base-response-api'
@@ -11,18 +11,24 @@ export interface Route {
 }
 
 export class BaseService {
-    protected token: string
+    protected privateToken: string
     protected axios: Axios
-    protected config: AxiosRequestConfig
+    protected config: () => AxiosRequestConfig
 
     constructor(config?: AxiosRequestConfig, token?: any) {
         this.axios = axios
-        this.token = token ?? `Bearer ${Cookies.get("accessToken")}`
-        this.config = config ?? {
-            headers: {
-                Authorization: this.token
+        this.privateToken = token;
+        this.config = () => {
+            return config ?? {
+                headers: {
+                    Authorization: this.getToken()
+                }
             }
         }
+    }
+
+    private getToken() {
+        return this.privateToken ?? `Bearer ${Cookies.get("token")}`
     }
 
     protected post<T>(
@@ -34,7 +40,7 @@ export class BaseService {
             this.route(route),
             body,
             {
-                ...this.config,
+                ...this.config(),
                 onUploadProgress: progressEventCallback
             }
         )
@@ -54,7 +60,7 @@ export class BaseService {
     }
 
     protected patch<T>(route: Route, body: any) {
-        const result = axios.patch(this.route(route), body, this.config)
+        const result = axios.patch(this.route(route), body, this.config())
             .then((response: IAxios<IBaseResponseApi<T>>) => {
                 return {
                     res: response.data.data,
@@ -71,7 +77,7 @@ export class BaseService {
     }
 
     protected get<T>(route: Route, config?: AxiosRequestConfig) {
-        const result = axios.get(this.route(route), { ...this.config, ...config })
+        const result = axios.get(this.route(route), { ...this.config(), ...config })
             .then((response: IAxios<IBaseResponseApi<T>>) => {
                 return {
                     res: response.data.data,
@@ -88,7 +94,7 @@ export class BaseService {
     }
 
     protected put<T>(route: Route, body: any) {
-        const result = axios.put(this.route(route), body, this.config)
+        const result = axios.put(this.route(route), body, this.config())
             .then((response: IAxios<IBaseResponseApi<T>>) => {
                 return response.data.data
             })
@@ -101,7 +107,7 @@ export class BaseService {
     }
 
     protected delete<T>(route: Route) {
-        const result = axios.delete(this.route(route), this.config)
+        const result = axios.delete(this.route(route), this.config())
             .then((response: IAxios<IBaseResponseApi<T>>) => {
                 return response.data.data
             })
@@ -121,23 +127,32 @@ export class BaseService {
 
     protected urlParams(params) {
         if (params) {
-            const keys = Object.keys(params);
+            const keys = Object.keys(params)
             if (keys.length > 0) {
                 const stringParams = keys.map(e => {
-                    if (typeof params[e] === "string" && params[e]?.trim() !== "") {
-
-                        return `${e}=${params[e]}`;
-                    } 
-                    else if (Array.isArray(params[e])) {
-                        return params[e].map(i => `${e}=${i}`).join("&");
-                    } 
+                    if ((typeof params[e] == "string" && params[e] != null && params[e]?.trim() != "")) {
+                        if (Array.isArray(params[e])) {
+                            params[e].forEach(i => {
+                                e + "=" + i
+                            });
+                        }
+                        else {
+                            return e + "=" + params[e]
+                        }
+                    }
                     else {
-    
-                        return `${e}=${params[e]}`;
+                        if (Array.isArray(params[e])) {
+                            params[e].forEach(i => {
+                                e + "=" + i
+                            });
+                        }
+                        else {
+                            return e + "=" + params[e]
+                        }
                     }
                 });
-        
-                return "?" + stringParams.filter(e => e != null).join("&");
+
+                return "?" + stringParams.filter(e => e != null).join("&")
             }
         }
 
