@@ -19,7 +19,7 @@ interface IDropdownRootContainerProps {
 };
 
 const DropdownRootContainer = forwardRef((props: IDropdownRootContainerProps, ref: RefCallBack | LegacyRef<HTMLInputElement>) => {
-    const { open, setOpen, selected, setSelected, filter, setFilter } = useContext(DropdownContextObject)
+    const { open, setOpen, selected, setSelected, filter, setFilter, setStarted } = useContext(DropdownContextObject)
     const internalRef = useRef<HTMLInputElement | null>()
     const helperInputRef: any = useRef()
     const inputProps = { ...props, children: null }
@@ -48,9 +48,7 @@ const DropdownRootContainer = forwardRef((props: IDropdownRootContainerProps, re
     }
 
     useEffect(() => {
-        if(inputProps.value != null){
-            setSelected({ value: inputProps.value, label: "Procurando valor"})
-        }
+        setStarted(inputProps.value)
     }, [])
 
     return (
