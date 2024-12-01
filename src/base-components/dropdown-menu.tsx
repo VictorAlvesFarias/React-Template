@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { useSelector } from "../utils/hooks/selector-hooks"
 import { IDropdownOptionValue } from "./dropdown-option"
 import { DropdownContextObject } from "./dropdown-context"
@@ -10,8 +10,14 @@ interface IDropdownMenuContainerProps {
 };
 
 function DropdownMenuContainer(props: IDropdownMenuContainerProps) {
-    const { filter } = useContext(DropdownContextObject)
+    const { filter, started, setSelected } = useContext(DropdownContextObject)
     const items = Array.isArray(props.children) ? props.children : [props.children]
+
+    useEffect(() => {
+        if (started != null) {
+            setSelected({ value: started, label: items.filter(e=>e.props.value == started)[0].props.label})
+        }
+    }, [started])
 
     return (
         <div className={'w-full flex flex-col ' + props.className}>
