@@ -1,4 +1,4 @@
-import { useSelector } from "../utils/hooks/selector-hooks"
+import { componentSelector } from "../utils/helpers/component-selector"
 import React from "react"
 
 const rootVariations = {
@@ -6,6 +6,6 @@ const rootVariations = {
         <table {...props} className="min-w-full divide-y h-fit divide-black divide-opacity-10" />
 }
 
-const TableRoot = useSelector<keyof typeof rootVariations, React.HTMLAttributes<HTMLTableElement>>(rootVariations)
+const TableRoot = componentSelector<keyof typeof rootVariations, React.HTMLAttributes<HTMLTableElement>>(rootVariations)
 
 export default TableRoot

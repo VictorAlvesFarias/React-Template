@@ -1,11 +1,11 @@
 import React from "react"
-import { useSelector } from "../utils/hooks/selector-hooks"
+import { componentSelector } from "../utils/helpers/component-selector"
 
 const AccordionRootVariations = {
     default: (props: React.HTMLAttributes<HTMLDivElement>) =>
         <div {...props} className='flex-col flex ' />
 }
 
-const AccordionRoot = useSelector<keyof typeof AccordionRootVariations, React.HTMLAttributes<HTMLDivElement>>(AccordionRootVariations)
+const AccordionRoot = componentSelector<keyof typeof AccordionRootVariations, React.HTMLAttributes<HTMLDivElement>>(AccordionRootVariations)
 
 export default AccordionRoot

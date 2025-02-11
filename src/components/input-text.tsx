@@ -1,6 +1,6 @@
 import React from "react"
 import TextContainer, { ITextContainerProps } from '../base-components/input-text'
-import { useSelector } from "../utils/hooks/selector-hooks"
+import { componentSelector } from "../utils/helpers/component-selector"
 
 const inputTextVariations = {
     default: (props: ITextContainerProps, ref) =>
@@ -11,6 +11,6 @@ const inputTextVariations = {
         <TextContainer {...props} ref={ref} className="h-9 rounded-full bg-white pl-6 items-center flex outline-2 focus-within:outline outline-violet-500 cursor-text text-zinc-900 focus-within:border-transparent aria-[atomic]:animate-pulse" />,
 }
 
-const Text = useSelector<keyof typeof inputTextVariations, ITextContainerProps>(inputTextVariations)
+const Text = componentSelector<keyof typeof inputTextVariations, ITextContainerProps>(inputTextVariations)
 
 export default Text

@@ -1,4 +1,4 @@
-import { useSelector } from "../utils/hooks/selector-hooks"
+import { componentSelector } from "../utils/helpers/component-selector"
 import SidebarItemContainer, { ISidebarItemContainerProps } from '../base-components/sidebar-item'
 import React from "react"
 
@@ -15,6 +15,6 @@ const itemVariations = {
         />,
 }
 
-const ISidebarItemContainerPropsItem = useSelector<keyof typeof itemVariations, ISidebarItemContainerProps>(itemVariations)
+const ISidebarItemContainerPropsItem = componentSelector<keyof typeof itemVariations, ISidebarItemContainerProps>(itemVariations)
 
 export default ISidebarItemContainerPropsItem

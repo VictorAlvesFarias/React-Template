@@ -1,6 +1,6 @@
 import React from "react"
 import FormContainer, { IFormContainerProps } from '../base-components/form'
-import { useSelector } from "../utils/hooks/selector-hooks"
+import { componentSelector } from "../utils/helpers/component-selector"
 
 const formVariation = {
     default: (props: IFormContainerProps) =>
@@ -13,6 +13,6 @@ const formVariation = {
         <FormContainer {...props} className='flex gap-3 p-6' />
 }
 
-const Form = useSelector<keyof typeof formVariation, IFormContainerProps>(formVariation)
+const Form = componentSelector<keyof typeof formVariation, IFormContainerProps>(formVariation)
 
 export default Form

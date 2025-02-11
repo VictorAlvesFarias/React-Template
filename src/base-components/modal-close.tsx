@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useSelector } from '../utils/hooks/selector-hooks'
+import { componentSelector } from "../utils/helpers/component-selector"
 import { ModalContextObject } from './modal-context'
 
 interface IModalCloseProps {

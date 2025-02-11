@@ -1,5 +1,5 @@
 import React from "react"
-import { useSelector } from '../utils/hooks/selector-hooks'
+import { componentSelector } from "../utils/helpers/component-selector"
 import SidebarMenuContainer, { IMenuContainerProps } from '../base-components/sidebar-menu'
 
 const menuVariations = {
@@ -15,6 +15,6 @@ const menuVariations = {
         />
 }
 
-const SidebarMenu = useSelector<keyof typeof menuVariations, IMenuContainerProps>(menuVariations)
+const SidebarMenu = componentSelector<keyof typeof menuVariations, IMenuContainerProps>(menuVariations)
 
 export default SidebarMenu

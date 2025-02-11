@@ -1,11 +1,11 @@
 import React from "react"
-import { useSelector } from "../utils/hooks/selector-hooks"
+import { componentSelector } from "../utils/helpers/component-selector"
 
 const CardRootVariations = {
     default: (props: React.HTMLAttributes<HTMLDivElement>) =>
         <div {...props} className={"px-6 inline-table"} />,
 }
 
-const CardRoot = useSelector<keyof typeof CardRootVariations, React.HTMLAttributes<HTMLDivElement>>(CardRootVariations)
+const CardRoot = componentSelector<keyof typeof CardRootVariations, React.HTMLAttributes<HTMLDivElement>>(CardRootVariations)
 
 export default CardRoot

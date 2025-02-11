@@ -1,4 +1,4 @@
-import { useSelector } from "../utils/hooks/selector-hooks"
+import { componentSelector } from "../utils/helpers/component-selector"
 import React from "react"
 
 const spanVariations = {
@@ -8,6 +8,6 @@ const spanVariations = {
     <span children={props.children} className='text-red-400' />,
 }
 
-const Span = useSelector<keyof typeof spanVariations, React.HTMLAttributes<HTMLSpanElement>>(spanVariations)
+const Span = componentSelector<keyof typeof spanVariations, React.HTMLAttributes<HTMLSpanElement>>(spanVariations)
 
 export default Span

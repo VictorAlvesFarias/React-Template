@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react"
-import { useSelector } from "../utils/hooks/selector-hooks"
+import { componentSelector } from "../utils/helpers/component-selector"
 import { IDropdownOptionValue } from "./dropdown-option"
 import { DropdownContextObject } from "./dropdown-context"
 

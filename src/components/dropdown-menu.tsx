@@ -1,5 +1,5 @@
 import React from "react"
-import { useSelector } from "../utils/hooks/selector-hooks"
+import { componentSelector } from "../utils/helpers/component-selector"
 import DropdownMenuContainer, { IDropdownMenuContainerProps } from '../base-components/dropdown-menu'
 
 const dropdownMenuVariations = {
@@ -10,6 +10,6 @@ const dropdownMenuVariations = {
         />
 }
 
-const DropdownMenu = useSelector<keyof typeof dropdownMenuVariations, IDropdownMenuContainerProps>(dropdownMenuVariations)
+const DropdownMenu = componentSelector<keyof typeof dropdownMenuVariations, IDropdownMenuContainerProps>(dropdownMenuVariations)
 
 export default DropdownMenu

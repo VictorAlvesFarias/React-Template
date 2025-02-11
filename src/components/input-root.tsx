@@ -1,5 +1,5 @@
 import React from "react"
-import { useSelector } from "../utils/hooks/selector-hooks"
+import { componentSelector } from "../utils/helpers/component-selector"
 
 const rootVariations = {
     default: (props: React.HTMLAttributes<HTMLDivElement>) =>
@@ -10,6 +10,6 @@ const rootVariations = {
         <div {...props} className="flex relative gap-3" />
 }
 
-const InputRoot = useSelector<keyof typeof rootVariations, React.HTMLAttributes<HTMLDivElement>>(rootVariations)
+const InputRoot = componentSelector<keyof typeof rootVariations, React.HTMLAttributes<HTMLDivElement>>(rootVariations)
 
 export default InputRoot

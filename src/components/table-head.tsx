@@ -1,5 +1,5 @@
 import React from "react"
-import { useSelector } from "../utils/hooks/selector-hooks"
+import { componentSelector } from "../utils/helpers/component-selector"
 
 const headVariations = {
     default: (props: React.HTMLAttributes<HTMLTableCellElement>) =>
@@ -8,6 +8,6 @@ const headVariations = {
         <th {...props} className="min-w-full divide-b divide-opacity-10  sticky top-0 " />
 }
 
-const TableHead = useSelector<keyof typeof headVariations, React.HTMLAttributes<HTMLTableCellElement>>(headVariations)
+const TableHead = componentSelector<keyof typeof headVariations, React.HTMLAttributes<HTMLTableCellElement>>(headVariations)
 
 export default TableHead

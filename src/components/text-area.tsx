@@ -1,5 +1,5 @@
 import TextContainer, { ITextContainerProps } from '../base-components/text-area';
-import { useSelector } from '../utils/hooks/selector-hooks'
+import { componentSelector } from "../utils/helpers/component-selector"
 import React from 'react'
 
 const textAreaVariations = {
@@ -11,6 +11,6 @@ const textAreaVariations = {
         <TextContainer {...props} ref={ref} className="h-9 rounded-full bg-white pl-6 items-center flex outline-2 focus-within:outline outline-violet-500 cursor-text text-zinc-900 focus-within:border-transparent aria-[atomic]:animate-pulse" />,
 };
 
-const TextArea = useSelector<keyof typeof textAreaVariations, ITextContainerProps>(textAreaVariations);
+const TextArea = componentSelector<keyof typeof textAreaVariations, ITextContainerProps>(textAreaVariations);
 
 export default TextArea;

@@ -1,6 +1,6 @@
 import React from "react"
 import CheckboxContainer, { ICheckboxContainerProps } from '../base-components/checkbox'
-import { useSelector } from "../utils/hooks/selector-hooks"
+import { componentSelector } from "../utils/helpers/component-selector"
 
 
 const checkboxVariations = {
@@ -12,6 +12,6 @@ const checkboxVariations = {
         />,
 }
 
-const Checkbox = useSelector<keyof typeof checkboxVariations, ICheckboxContainerProps>(checkboxVariations)
+const Checkbox = componentSelector<keyof typeof checkboxVariations, ICheckboxContainerProps>(checkboxVariations)
 
 export default Checkbox

@@ -1,5 +1,5 @@
 import React, { FormEvent, forwardRef, LegacyRef, useRef } from 'react'
-import { useSelector } from '../utils/hooks/selector-hooks'
+import { componentSelector } from "../utils/helpers/component-selector"
 import { RefCallBack } from 'react-hook-form'
 
 interface IFormContainerProps {
