@@ -18,7 +18,12 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const permissions = Cookies.get('claims');
   const [isAuthenticated, setIsAuthenticated] = useState(!!token);
   const [permissionsContext, setPermissionsContext] = useState(JSON.parse(permissions ?? "{}"));
+  const expirationDate: any = Cookies.get("expirationDateTimeAccessToken")
 
+  function handleLogout() {
+    loginService.logout()
+    window.location.pathname = "/login"
+  }
   function handleSignIn(data) {
     const result = loginService.loginPost(data)
       .then(e => {
@@ -29,13 +34,9 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 
     return result
   }
-  function handleLogout() {
-    loginService.logout()
-    window.location.pathname = "/login"
-  }
 
   useEffect(() => {
-    AuthenticationService.authenticationPipeline(token, window.location.pathname, (event) => {
+    AuthenticationService.authenticationPipeline(token, window.location.pathname, expirationDate, (event) => {
       if (event == "logout") {
         window.location.pathname = '/login'
         loginService.logout()

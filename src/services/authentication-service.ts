@@ -5,9 +5,7 @@ import Cookies from "js-cookie"
 class AuthenticationService {
     public static timeoutStarted = false
 
-    public static authenticationPipeline(token: string | undefined, currentRoute: string, redirect: (event: "authenticate" | "not-required" | "logout") => void) {
-        const expirationDate: any = Cookies.get("expirationDateTimeAccessToken")
-
+    public static authenticationPipeline(token: string | undefined, currentRoute: string, expirationDate: Date, redirect: (event: "authenticate" | "not-required" | "logout") => void) {
         if (((expirationDate == null || expirationDate == undefined) || token == null || token == undefined) && AUTH.DISABLE_AUTH == false) {
             if (!AUTH.AUTHORIZE_NOT_REQUIRED.includes(currentRoute)) {
                 redirect("logout")
