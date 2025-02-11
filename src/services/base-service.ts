@@ -1,7 +1,6 @@
 import axios, { Axios, AxiosHeaders, AxiosProgressEvent, AxiosRequestConfig } from 'axios'
 import Cookies from 'js-cookie'
 import { useErrors } from '../utils/hooks/errors-hooks'
-import { IBaseResponseApi } from '../interfaces/shared/base-response-api'
 import { Axios as IAxios } from '../interfaces/shared/axios'
 
 export interface Route {
@@ -44,12 +43,8 @@ export class BaseService {
                 onUploadProgress: progressEventCallback
             }
         )
-            .then((response: IAxios<IBaseResponseApi<T>>) => {
-                return {
-                    res: response.data.data,
-                    pages: response.data.pages,
-                    currentPage: response.data.currentPage
-                }
+            .then((response: IAxios<T>) => {
+                return response.data
             })
             .catch((error) => {
                 useErrors(error)
@@ -61,12 +56,8 @@ export class BaseService {
 
     protected patch<T>(route: Route, body: any) {
         const result = axios.patch(this.route(route), body, this.config())
-            .then((response: IAxios<IBaseResponseApi<T>>) => {
-                return {
-                    res: response.data.data,
-                    pages: response.data.pages,
-                    currentPage: response.data.currentPage
-                }
+            .then((response: IAxios<T>) => {
+                return response.data
             })
             .catch((error) => {
                 useErrors(error)
@@ -78,12 +69,8 @@ export class BaseService {
 
     protected get<T>(route: Route, config?: AxiosRequestConfig) {
         const result = axios.get(this.route(route), { ...this.config(), ...config })
-            .then((response: IAxios<IBaseResponseApi<T>>) => {
-                return {
-                    res: response.data.data,
-                    pages: response.data.pages,
-                    currentPage: response.data.currentPage
-                }
+            .then((response: IAxios<T>) => {
+                return response.data
             })
             .catch((error) => {
                 useErrors(error)
@@ -95,12 +82,8 @@ export class BaseService {
 
     protected put<T>(route: Route, body: any) {
         const result = axios.put(this.route(route), body, this.config())
-            .then((response: IAxios<IBaseResponseApi<T>>) => {
-                return response.data.data
-            })
-            .catch((error) => {
-                useErrors(error)
-                throw error
+            .then((response: IAxios<T>) => {
+                return response.data
             })
 
         return result
@@ -108,12 +91,8 @@ export class BaseService {
 
     protected delete<T>(route: Route) {
         const result = axios.delete(this.route(route), this.config())
-            .then((response: IAxios<IBaseResponseApi<T>>) => {
-                return response.data.data
-            })
-            .catch((error) => {
-                useErrors(error)
-                throw error
+            .then((response: IAxios<T>) => {
+                return response.data
             })
 
         return result
