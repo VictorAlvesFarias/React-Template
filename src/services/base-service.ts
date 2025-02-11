@@ -2,6 +2,7 @@ import axios, { Axios, AxiosHeaders, AxiosProgressEvent, AxiosRequestConfig } fr
 import Cookies from 'js-cookie'
 import { useErrors } from '../utils/hooks/errors-hooks'
 import { Axios as IAxios } from '../interfaces/shared/axios'
+import { AUTH } from '../config/auth-config'
 
 export interface Route {
     api: string
@@ -9,7 +10,7 @@ export interface Route {
     params?: any
 }
 
-export class BaseService {
+export abstract class BaseService {
     protected privateToken: string
     protected axios: Axios
     protected config: () => AxiosRequestConfig
@@ -20,14 +21,10 @@ export class BaseService {
         this.config = () => {
             return config ?? {
                 headers: {
-                    Authorization: this.getToken()
+                    Authorization: this.privateToken ?? AUTH.DEFAULT_AUTHORIZATION_TOKEN()
                 }
             }
         }
-    }
-
-    private getToken() {
-        return this.privateToken ?? `Bearer ${Cookies.get("token")}`
     }
 
     protected post<T>(
