@@ -4,24 +4,29 @@
 
 The React Template is a flexible and scalable foundation for building modern applications, leveraging custom hooks for efficient state management and logic reuse. Designed with a modular architecture, it ensures reusability and easy scalability, while its flexible UI structure adapts to various project needs. With a focus on performance optimization, it enables smooth rendering and state handling, making it an ideal starting point for developing robust and maintainable React applications.
 
-##  Table of Contents
-
 ## Table of Contents
 
 - [Overview](#overview)
-- [Features](#features)
 - [Project Structure](#project-structure)
-  - [Project Index](#project-index)
 - [Getting Started](#getting-started)
+  - [Project Index](#project-index)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Usage](#usage)
-- [Configuration](#configuration)
-  - [Recomendations](#recomendations)
+- [Main Features](#main-features)
+  - [Configuration](#configuration)
+    - [Recommendations](#recommendations)
+  - [HTTP Requests](#http-requests)
+  - [Authentication](#authentication)
+    - [How It Works](#how-it-works)
+  - [Components and componentSelector()](#components-and-componentselector)
+  - [Building Static Application](#building-static-application)
+
 
 ##  Project Structure
 
-```sh
+```js
+
 ┌── public
 │   └── assets
 ├── src
@@ -68,6 +73,7 @@ Install  using one of the following methods:
 
 Clone the  repository:
 ```sh
+
  git clone https://github.com/VictorAlvesFarias/Safeguard-Backend
 ```
 
@@ -100,32 +106,18 @@ Run  using the following command:
  pnpm run dev
 ```
 
-### Building static application &nbsp; 
 
-The build destination folder will be "dist".
+## Main features
 
-```sh
- npm run build
-```
- 
-```sh
- yarn run build
-```
-
-```sh
- pnpm run build
-```
-
-
-##  Configuration
+###  Configuration
 
 The configuration files in the project are used to define constants and settings that are reused across the application. These configurations help maintain consistency and reduce hardcoding in the codebase. Below, we'll break down the two configuration files provided: MASK and AUTH.
 
-**mask-confg.ts**
+**mask-config.ts**
 
 The MASK configuration is used to define regex patterns and formatting rules for common data types like documents, phone numbers, and dates. This is particularly useful for input masking and formatting in forms or UI components. This configuration format is compatible with the input component's native mask.
 
-``` sh
+``` js
 const MASK: { [key: string]: [RegExp, string]; } = {
     DOCUMENT: [/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4'],
     PHONE: [/(^\d{2})(\d{4,5})(\d{4}$)/, '($1) $2-$3'],
@@ -138,7 +130,7 @@ export {
 ```
 
 
-**mask-confg.ts**
+**mask-config.ts**
 
 The AUTH configuration is used to manage authentication-related settings, such as routes that don't require authorization and whether authentication is globally enabled or disabled.
 
@@ -146,18 +138,18 @@ The AUTH configuration is used to manage authentication-related settings, such a
 
 * **DISABLE_AUTH**: A boolean flag to globally enable or disable authentication.
 
-* **STARTER_LENGHT_HISTORY**: Stores the initial length of the browser's history stack. Useful for tracking navigation changes or redirects. This property is responsible for disabling or enabling redirects component.
+* **STARTER_LENGTH_HISTORY**: Stores the initial length of the browser's history stack. Useful for tracking navigation changes or redirects. This property is responsible for disabling or enabling redirects component.
 
 *  **DEFAULT_AUTHORIZATION_TOKEN**:  It is a function that returns a string for use in the base service as default authorization token.
 
-``` sh
+``` js
 const AUTH = {
   AUTHORIZE_NOT_REQUIRED: [
     "/login",
     "/signup",
   ],
   DISABLE_AUTH: true,
-  STARTER_LENGHT_HISTORY: window.history.length,
+  STARTER_LENGTH_HISTORY: window.history.length,
   DEFAULT_AUTHORIZATION_TOKEN:  () =>  `Bearer ${Cookies.get("token")}`
 }
 
@@ -166,16 +158,16 @@ export {
 }
 ```
 
-### Recomendations
+#### Recomendations
 
 It is possible to use other configuration files, such as routes or user types, but, unlike the settings already mentioned, they have no implication on the operation of the lib, but it is good practice.
 
-##  HTTP Requests
+###  HTTP Requests
 
-For the HTTP requests, it is recommended using Base Service class, this class is a mediatior with http requests, your requests are made with axios library. For default the authorization token and configs are made in constructor class, but, they can customized  in super constructor of class heiress.
+For the HTTP requests, it is recommended using Base Service class, this class is a mediator with http requests, your requests are made with axios library. For default the authorization token and configs are made in constructor class, but, they can customized  in super constructor of class heiress.
 
 
-``` sh
+``` js
  class abstract BaseService {
     protected privateToken: string
     protected axios: Axios
@@ -197,7 +189,7 @@ For the HTTP requests, it is recommended using Base Service class, this class is
 
 Example for the custom config:
 
-``` sh
+``` js
 class LoginService extends BaseService {
 
   constructor() {
@@ -210,6 +202,94 @@ class LoginService extends BaseService {
 ...
 ```
 
-##  Components
 
-##  Authentication
+### Authentication
+
+The AuthenticationService class is responsible for managing the authentication pipeline in an application. It checks the user's authentication status, handles token expiration, and triggers appropriate redirects based on the current route and authentication state.
+Redirect Logic
+
+#### How It Works
+
+**Token and Expiration Check**
+
+The method first retrieves the token expiration date from a ``` expirationDate```;
+
+If the token or expiration date is missing, and authentication is not globally disabled ```(AUTH.DISABLE_AUTH == false)``` , the user is considered unauthenticated.
+
+If the current route is not in the ```AUTH.AUTHORIZE_NOT_REQUIRED``` list (routes that don't require authentication), the user is redirected to the logout flow.
+
+**Token Expiration Handling**
+
+If a valid token exists, the method calculates the time difference between the current time and the token's expiration time.
+
+If the current route is in the ```AUTH.AUTHORIZE_NOT_REQUIRED``` list, the user is redirected to a "not-required" flow (e.g., they are already authenticated and don't need to access a public route).
+
+If no timeout has been started ```(timeoutStarted == false)```, a timeout is set to trigger a logout when the token expires. The timeoutStarted flag is set to true to prevent duplicate timeouts.
+
+If the token is valid and no special conditions apply, the user is redirected to the "authenticate" flow.
+
+**Redirect Logic**
+
+The redirect callback is called with one of three events:
+
+* **"logout"**: Triggers when the user is unauthenticated or the token has expired.
+
+* **"not-required"**: Triggers when the user is authenticated but accessing a public route.
+
+* **"authenticate"**: Triggers when the user is authenticated and accessing a protected route.
+
+**Using example**
+
+``` js
+  useEffect(() => {
+    AuthenticationService.authenticationPipeline(token, window.location.pathname, expirationDate, (event) => {
+      if (event == "logout") {
+        window.location.pathname = '/login'
+        loginService.logout()
+      }
+      if (event == "not-required") {
+        //no events
+      }
+      if (event == "authenticate") {
+        //no events
+      }
+    })
+  }, [])
+```
+
+###  Components and ```componentSelector()```
+
+Components are divided into two types, “base components” and “components”. The base components do not have a style, just the logic necessary to function, the components have style definitions and use an auxiliary function ```componentSelector``` to make style variations.
+
+**Using example**
+
+``` js
+const spanVariations = {
+  default: (props: React.HTMLAttributes<HTMLSpanElement>) =>
+    <span children={props.children} className='mb-1 font-semibold px-1' />,
+  error: (props: React.HTMLAttributes<HTMLSpanElement>) =>
+    <span children={props.children} className='text-red-400' />,
+}
+
+const Span = componentSelector<keyof typeof spanVariations, React.HTMLAttributes<HTMLSpanElement>>(spanVariations)
+
+export default Span
+```
+
+
+## Building static application;
+
+
+The build destination folder will be "dist".
+
+```sh
+ npm run build
+```
+ 
+```sh
+ yarn run build
+```
+
+```sh
+ pnpm run build
+```
