@@ -6,7 +6,7 @@ const AUTH = {
     "/signup",
   ],
   DISABLE_AUTH: true,
-  STARTER_LENGHT_HISTORY: window.history.length,
+  STARTER_LENGTH_HISTORY: window.history.length,
   DEFAULT_AUTHORIZATION_TOKEN:  () =>  `Bearer ${Cookies.get("token")}`
 }
 
