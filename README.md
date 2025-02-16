@@ -25,7 +25,7 @@ The React Template is a flexible and scalable foundation for building modern app
 
 ##  Project Structure
 
-```js
+```
 
 ┌── public
 │   └── assets
