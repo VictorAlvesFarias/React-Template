@@ -206,31 +206,24 @@ class LoginService extends BaseService {
 ### Authentication
 
 The AuthenticationService class is responsible for managing the authentication pipeline in an application. It checks the user's authentication status, handles token expiration, and triggers appropriate redirects based on the current route and authentication state.
-Redirect Logic
 
 #### How It Works
 
-**Token and Expiration Check**
-
-The method first retrieves the token expiration date from a ``` expirationDate```;
-
-If the token or expiration date is missing, and authentication is not globally disabled ```(AUTH.DISABLE_AUTH == false)``` , the user is considered unauthenticated.
-
-If the current route is not in the ```AUTH.AUTHORIZE_NOT_REQUIRED``` list (routes that don't require authentication), the user is redirected to the logout flow.
-
-**Token Expiration Handling**
-
-If a valid token exists, the method calculates the time difference between the current time and the token's expiration time.
-
-If the current route is in the ```AUTH.AUTHORIZE_NOT_REQUIRED``` list, the user is redirected to a "not-required" flow (e.g., they are already authenticated and don't need to access a public route).
-
-If no timeout has been started ```(timeoutStarted == false)```, a timeout is set to trigger a logout when the token expires. The timeoutStarted flag is set to true to prevent duplicate timeouts.
-
-If the token is valid and no special conditions apply, the user is redirected to the "authenticate" flow.
-
 **Redirect Logic**
 
-The redirect callback is called with one of three events:
+The authenticationPipeline method evaluates the user's authentication status and determines the appropriate action based on the following conditions:
+
+* **"Global Authentication Disable (disableAuth)"**: If disableAuth is set to true, the user is immediately redirected to the "authenticate" flow, bypassing all other checks.
+
+* **"Unprotected Paths (unprotectedPaths)"**: If the current route is listed in unprotectedPaths, the user is redirected to the "not-required" flow, indicating that authentication is not required for this route.
+
+* **"Token and Expiration Check"**: If the token or expiration date is missing (null or undefined), and the current route is not in the unprotectedPaths list, the user is redirected to the "logout" flow. If the token is valid, the method calculates the time difference between the current time and the token's expiration time.
+
+* **"Token Expiration Handling"**: If no timeout has been started (timeoutStarted == false), a timeout is set to trigger a logout when the token expires. The timeoutStarted flag is set to true to prevent duplicate timeouts. If the token is valid and no special conditions apply, the user is redirected to the "authenticate" flow.
+
+**Redirect Events**
+
+The authenticationPipeline method evaluates the user's authentication status and determines the appropriate action based on the following conditions:
 
 * **"logout"**: Triggers when the user is unauthenticated or the token has expired.
 
@@ -242,19 +235,26 @@ The redirect callback is called with one of three events:
 
 ``` js
   useEffect(() => {
-    AuthenticationService.authenticationPipeline(token, window.location.pathname, expirationDate, (event) => {
-      if (event == "logout") {
-        window.location.pathname = '/login'
-        loginService.logout()
+    AuthenticationService.authenticationPipeline(
+      token,
+      window.location.pathname,
+      expirationDate,
+      disableAuth,
+      unprotectedPaths,
+      (event) => {
+        if (event === "logout") {
+          window.location.pathname = '/login';
+          loginService.logout();
+        }
+        if (event === "not-required") {
+          // No action needed for public routes
+        }
+        if (event === "authenticate") {
+          // No action needed for protected routes
+        }
       }
-      if (event == "not-required") {
-        //no events
-      }
-      if (event == "authenticate") {
-        //no events
-      }
-    })
-  }, [])
+    );
+  }, []);
 ```
 
 ###  Components and ```componentSelector()```
