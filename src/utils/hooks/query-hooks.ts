@@ -1,40 +1,22 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import { executeRequests } from "../helpers/execute-requests";
 
 type useQueryExecuteRequestProps = (() => Promise<any>)[] | (() => Promise<any>);
 type useQueryReturn = [boolean, (requests: useQueryExecuteRequestProps) => void];
 
-function useQuery(value?): useQueryReturn  {
+function useQuery(value?): useQueryReturn {
   const [allRequestsResolved, setAllRequestsResolved] = useState<boolean>(value);
-  const navigate = useNavigate();
 
-  async function executeRequests(requests: useQueryExecuteRequestProps) {
-    setAllRequestsResolved(false);
-
-    if (Array.isArray(requests)) {
-      await Promise.all(
-        requests.map(request =>
-          request()
-            .catch(error => {
-              setAllRequestsResolved(true);
-              throw error;
-            })
-        )
-      );
-    } else {
-      await requests()
-        .catch(error => {
-          setAllRequestsResolved(true);
-          throw error;
-        });
-    }
-
-    setAllRequestsResolved(true);
+  async function executeRequestsHandle(requests: useQueryExecuteRequestProps) {
+    executeRequests(requests, (event) => setAllRequestsResolved(event))
   }
 
-  return [allRequestsResolved, executeRequests];
+  return [allRequestsResolved, executeRequestsHandle];
 }
+
+
 
 export {
   useQuery,

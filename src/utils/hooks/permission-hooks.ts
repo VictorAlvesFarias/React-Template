@@ -3,56 +3,23 @@ import { AuthContext } from "../../auth/auth-context";
 import { useNavigate } from "react-router-dom";
 import IClaimsKeys from "../../interfaces/shared/claims";
 import { AUTH } from "../../config/auth-config";
+import { claimAuthentication } from "../helpers/claim-authentication";
 
-function usePermission(claim: IClaimsKeys | undefined | IClaimsKeys[]) {
-    const { permissions } = useContext(AuthContext)
-    const navigate = useNavigate()
-    let authorized = false
+function usePermission(claim: IClaimsKeys | undefined | IClaimsKeys[], redirect: () => void) {
+    const { permissions }: any = useContext(AuthContext)
+    const authorized = claimAuthentication(claim, AUTH.DISABLE_AUTH, permissions)
 
-    if(Array.isArray(claim)) {
-        for (let i = 0; i < claim.length; i++) {
-            if(permissions != null){
-                if (permissions[claim[i]] == true || AUTH.DISABLE_AUTH) {
-                    authorized = true
-    
-                    break
-                }
-            }
-        }
-
-    }
-    else {
-        authorized = (permissions != null && claim != null && permissions[claim]) || AUTH.DISABLE_AUTH
-    }
-    
     useEffect(() => {
-        if (!authorized) {
-            navigate("/405")
+        if (authorized) {
+            redirect()
         }
     }, [])
 }
 function useAuthenticateComponent() {
-    const { permissions } = useContext(AuthContext)
+    const { permissions }: any = useContext(AuthContext)
 
     function isAuthenticated(claim: IClaimsKeys | undefined | IClaimsKeys[]) {
-        if (permissions != null && claim != null) {
-            if (Array.isArray(claim)) {
-                let result = false  
-
-                for (let i = 0; i < claim.length; i++) {
-                    if (permissions[claim[i]] == true || AUTH.DISABLE_AUTH) {
-                        result = true
-
-                        break
-                    }
-                }
-
-                return result
-            }
-            else {
-                return permissions[claim] ?? AUTH.DISABLE_AUTH
-            }
-        }
+        return claimAuthentication(claim, AUTH.DISABLE_AUTH, permissions)
     }
 
     return isAuthenticated
