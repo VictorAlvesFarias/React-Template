@@ -36,18 +36,24 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
-    AuthenticationService.authenticationPipeline(token, window.location.pathname, expirationDate, (event) => {
-      if (event == "logout") {
-        window.location.pathname = '/login'
-        loginService.logout()
-      }
-      if (event == "not-required") {
-        //no events
-      }
-      if (event == "authenticate") {
-        //no events
-      }
-    })
+    AuthenticationService.authenticationPipeline(
+      token,
+      window.location.pathname,
+      expirationDate,
+      AUTH.DISABLE_AUTH,
+      AUTH.AUTHORIZE_NOT_REQUIRED,
+      (event) => {
+        if (event == "logout") {
+          window.location.pathname = '/login'
+          loginService.logout()
+        }
+        if (event == "not-required") {
+          //no events
+        }
+        if (event == "authenticate") {
+          //no events
+        }
+      })
   }, [])
 
   return (
