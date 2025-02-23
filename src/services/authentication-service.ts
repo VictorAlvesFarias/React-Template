@@ -20,7 +20,7 @@ export class AuthenticationService {
             return redirect("not-required") ?? true
         }
 
-        else if ((expirationDate == null || expirationDate == undefined || token == null || token == undefined)) {
+        else if ((expirationDate == null || expirationDate == undefined) && (token == null || token == undefined)) {
             if (unprotectedPaths.includes(currentRoute)) {
                 return redirect("not-required") ?? true
             }
@@ -33,9 +33,8 @@ export class AuthenticationService {
         if (!this.timeoutStarted) {
             this.timeoutStarted = true
             setTimeout(() => {
+                return redirect("logout") ?? false
             }, timeDiference);
-
-            return redirect("logout") ?? false
         }
 
         return redirect("authenticate") ?? true
