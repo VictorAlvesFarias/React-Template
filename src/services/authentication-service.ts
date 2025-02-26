@@ -3,7 +3,7 @@ export type RedirectType = "authenticate" | "not-required" | "logout"
 export class AuthenticationService {
     public static timeoutStarted = false
 
-    public static authenticationPipeline(
+    public static validateSession (
         token: string | undefined,
         currentRoute: string,
         expirationDate: Date,

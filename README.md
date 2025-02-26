@@ -205,13 +205,13 @@ class LoginService extends BaseService {
 
 ### Authentication
 
-The AuthenticationService class is responsible for managing the authentication pipeline in an application. It checks the user's authentication status, handles token expiration, and triggers appropriate redirects based on the current route and authentication state.
+The AuthenticationService class is responsible for managing the authentication in an application. It checks the user's authentication status, handles token expiration, and triggers appropriate redirects based on the current route and authentication state.
 
 #### How It Works
 
 **Redirect Logic**
 
-The authenticationPipeline method evaluates the user's authentication status and determines the appropriate action based on the following conditions:
+The validateSession  method evaluates the user's authentication status and determines the appropriate action based on the following conditions:
 
 * **"Global Authentication Disable (disableAuth)"**: If disableAuth is set to true, the user is immediately redirected to the "authenticate" flow, bypassing all other checks.
 
@@ -223,7 +223,7 @@ The authenticationPipeline method evaluates the user's authentication status and
 
 **Redirect Events**
 
-The authenticationPipeline method evaluates the user's authentication status and determines the appropriate action based on the following conditions:
+The validateSession  method evaluates the user's authentication status and determines the appropriate action based on the following conditions:
 
 * **"logout"**: Triggers when the user is unauthenticated or the token has expired.
 
@@ -235,7 +235,7 @@ The authenticationPipeline method evaluates the user's authentication status and
 
 ``` js
   useEffect(() => {
-    AuthenticationService.authenticationPipeline(
+    AuthenticationService.validateSession (
       token,
       window.location.pathname,
       expirationDate,

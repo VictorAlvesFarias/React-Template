@@ -36,7 +36,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
-    AuthenticationService.authenticationPipeline(
+    AuthenticationService.validateSession (
       token,
       window.location.pathname,
       expirationDate,
