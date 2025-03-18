@@ -1,8 +1,8 @@
-import { getPathClientSide, languageFactory } from "../../../i18n.config";
+import { usePathClientSide, languageFactory } from "../../../i18n.config";
 import { useEffect, useState } from "react";
 
 function useClientInter<T>(dictionaryFile: string, callback?: (e: any) => any) {
-    const location = getPathClientSide(); 
+    const location = usePathClientSide(); 
     const internationalizationPath = location.split("/")[1];
     const language = languageFactory(internationalizationPath);
     const [texts, setTexts] = useState<T | null>(null);

@@ -1,3 +1,3 @@
-export function getPathServerSide() {
+export function usePathServerSide() {
     return ""
 }

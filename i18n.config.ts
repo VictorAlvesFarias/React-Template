@@ -5,11 +5,11 @@ const dictionaryImports = {
     "pt-br": (file: string) => import(`@/dictionaries/pt-br/${file}.json`)
 };
 
-export function getPathClientSide() {
+export function usePathClientSide() {
     return useLocation().pathname
 }
 
-export function getPathServerSide() {
+export function usePathServerSide() {
     return ''
 }
 
