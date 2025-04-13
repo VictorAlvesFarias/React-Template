@@ -11,7 +11,6 @@ export class AuthenticationService {
         unprotectedPaths: string[],
         redirect: (event: RedirectType) => boolean | void | null | undefined
     ) {
-
         if (disableAuth == true) {
             return redirect("authenticate") ?? true
         }
@@ -20,10 +19,7 @@ export class AuthenticationService {
             return redirect("not-required") ?? true
         }
 
-        else if ((expirationDate == null || expirationDate == undefined) && (token == null || token == undefined)) {
-            if (unprotectedPaths.includes(currentRoute)) {
-                return redirect("not-required") ?? true
-            }
+        else if (expirationDate == null || expirationDate == undefined || token == null || token == undefined) {
 
             return redirect("logout") ?? false
         }
