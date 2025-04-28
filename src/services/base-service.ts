@@ -30,7 +30,8 @@ export abstract class BaseService {
     protected post<T>(
         route: Route,
         body: any,
-        progressEventCallback?: ((progressEvent: AxiosProgressEvent) => void)
+        progressEventCallback?: ((progressEvent: AxiosProgressEvent) => void),
+        config?: AxiosRequestConfig
     ) {
         const result = axios.post(
             this.route(route),
@@ -51,8 +52,12 @@ export abstract class BaseService {
         return result
     }
 
-    protected patch<T>(route: Route, body: any) {
-        const result = axios.patch(this.route(route), body, this.config())
+    protected patch<T>(
+        route: Route, 
+        body: any, 
+        config?: AxiosRequestConfig
+    ) {
+        const result = axios.patch(this.route(route), body, { ...this.config(), ...config })
             .then((response: IAxios<T>) => {
                 return response.data
             })
@@ -64,7 +69,10 @@ export abstract class BaseService {
         return result
     }
 
-    protected get<T>(route: Route, config?: AxiosRequestConfig) {
+    protected get<T>(
+        route: Route, 
+        config?: AxiosRequestConfig
+    ) {
         const result = axios.get(this.route(route), { ...this.config(), ...config })
             .then((response: IAxios<T>) => {
                 return response.data
@@ -77,8 +85,12 @@ export abstract class BaseService {
         return result
     }
 
-    protected put<T>(route: Route, body: any) {
-        const result = axios.put(this.route(route), body, this.config())
+    protected put<T>(
+        route: Route, 
+        body: any, 
+        config?: AxiosRequestConfig
+    ) {
+        const result = axios.put(this.route(route), body, { ...this.config(), ...config })
             .then((response: IAxios<T>) => {
                 return response.data
             })
@@ -86,8 +98,11 @@ export abstract class BaseService {
         return result
     }
 
-    protected delete<T>(route: Route) {
-        const result = axios.delete(this.route(route), this.config())
+    protected delete<T>(
+        route: Route, 
+        config?: AxiosRequestConfig
+    ) {
+        const result = axios.delete(this.route(route), { ...this.config(), ...config })
             .then((response: IAxios<T>) => {
                 return response.data
             })
@@ -95,7 +110,9 @@ export abstract class BaseService {
         return result
     }
 
-    private route(route: Route) {
+    private route(
+        route: Route
+    ) {
         const result = `${route.api}${route.href}${this.urlParams(route.params)}`
 
         return result
