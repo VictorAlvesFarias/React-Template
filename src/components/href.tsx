@@ -1,6 +1,5 @@
 import { componentSelector } from "../utils/helpers/component-selector"
 import SidebarItemContainer, { IHrefContainerProps } from '../base-components/href'
-import React from "react"
 
 const HrefVariations = {
     default: (props: IHrefContainerProps) =>

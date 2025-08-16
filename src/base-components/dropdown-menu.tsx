@@ -6,7 +6,7 @@ import { DropdownContextObject } from "./dropdown-context"
 interface IDropdownMenuContainerProps {
     onValueChange?: (_: IDropdownOptionValue) => void
     children: React.ReactElement<IDropdownOptionValue> | React.ReactElement<IDropdownOptionValue>[],
-    className: string
+    className?: string
 };
 
 function DropdownMenuContainer(props: IDropdownMenuContainerProps) {

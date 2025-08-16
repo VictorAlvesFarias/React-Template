@@ -2,7 +2,7 @@ import React from 'react'
 import { LoaderCircle } from 'lucide-react';
 
 interface ILoadingContainerProps {
-  className: string
+  className?: string
 }
 
 function LoadingContainer(props: ILoadingContainerProps) {

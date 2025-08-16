@@ -3,7 +3,7 @@ import { AccordionContextObject } from './accordion-context';
 
 interface IAccordionTitleContainerProps {
     children: React.ReactNode
-    className: string
+    className?: string
     ref: any
     onClick?: (e: any) => any
 }

@@ -1,4 +1,3 @@
-import React from "react"
 import TextContainer, { ITextContainerProps } from '../base-components/input-text'
 import { componentSelector } from "../utils/helpers/component-selector"
 

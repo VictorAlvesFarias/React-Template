@@ -4,7 +4,7 @@ interface IButtonContainerProps {
   loading?: boolean
   loadingComponent?: React.ReactNode
   children: React.ReactNode
-  className: string
+  className?: string
   ref: any
   onClick?: (e: any) => any
   type?: "submit" | "reset" | "button" | undefined

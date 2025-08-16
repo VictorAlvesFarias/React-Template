@@ -3,7 +3,7 @@ import { SidebarContextObject } from "./sidebar-context"
 import React from "react"
 
 interface IMenuContainerProps {
-    className: string,
+    className?: string,
     children: React.ReactNode
 }
 

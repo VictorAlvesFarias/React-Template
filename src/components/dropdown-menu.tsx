@@ -1,4 +1,3 @@
-import React from "react"
 import { componentSelector } from "../utils/helpers/component-selector"
 import DropdownMenuContainer, { IDropdownMenuContainerProps } from '../base-components/dropdown-menu'
 

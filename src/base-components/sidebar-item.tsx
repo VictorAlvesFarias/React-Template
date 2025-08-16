@@ -5,7 +5,7 @@ import React from "react"
 import { AccordionContextObject } from "./accordion-context"
 
 interface ISidebarItemContainerProps {
-    className: string
+    className?: string
     children: React.ReactNode
     href?: string
     selected?: string

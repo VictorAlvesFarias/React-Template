@@ -1,4 +1,3 @@
-import React from "react"
 import { componentSelector } from "../utils/helpers/component-selector"
 import SidebarMenuContainer, { IMenuContainerProps } from '../base-components/sidebar-menu'
 

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 interface IHrefContainerProps {
     children: React.ReactNode
-    className: string
+    className?: string
     to: string
 }
 

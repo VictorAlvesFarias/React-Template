@@ -10,7 +10,7 @@ interface ITextContainerProps {
     onBlur?: (e: any) => any;
     ref?: any;
     value?: any;
-    className: string;
+    className?: string;
     placeholder?: string;
     mask?: [RegExp, string];
     type?: string;

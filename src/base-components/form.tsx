@@ -3,7 +3,7 @@ import { componentSelector } from "../utils/helpers/component-selector"
 import { RefCallBack } from 'react-hook-form'
 
 interface IFormContainerProps {
-    className: string
+    className?: string
     onSubmit: (e: any) => any
     children: React.ReactNode
     id?: string

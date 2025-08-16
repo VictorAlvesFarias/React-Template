@@ -1,6 +1,5 @@
 import { componentSelector } from "../utils/helpers/component-selector"
 import SidebarItemContainer, { ISidebarItemContainerProps } from '../base-components/sidebar-item'
-import React from "react"
 
 const itemVariations = {
     default: (props: ISidebarItemContainerProps) =>

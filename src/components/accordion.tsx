@@ -1,4 +1,3 @@
-import React from "react"
 import AccordionContainer, { IAccordionContainerProps } from '../base-components/accordion'
 import { componentSelector } from "../utils/helpers/component-selector"
 

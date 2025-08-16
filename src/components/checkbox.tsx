@@ -1,4 +1,3 @@
-import React from "react"
 import CheckboxContainer, { ICheckboxContainerProps } from '../base-components/checkbox'
 import { componentSelector } from "../utils/helpers/component-selector"
 

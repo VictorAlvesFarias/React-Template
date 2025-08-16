@@ -1,4 +1,3 @@
-import React from "react"
 import FormContainer, { IFormContainerProps } from '../base-components/form'
 import { componentSelector } from "../utils/helpers/component-selector"
 

@@ -1,5 +1,4 @@
-import React, { useContext } from "react"
-import { AuthContext } from "../auth/auth-context"
+import React from "react"
 import { useAuthenticateComponent } from "../utils/hooks/permission-hooks"
 import IClaimsKeys from "../interfaces/shared/claims"
 

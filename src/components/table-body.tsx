@@ -1,4 +1,4 @@
-import React, { TableHTMLAttributes } from "react"
+import React from "react"
 import { componentSelector } from "../utils/helpers/component-selector"
 
 const bodyVariations = {

@@ -1,4 +1,3 @@
-import React from "react"
 import SidebarHamburguerContainer, { SidebarHamburguerContainerProps } from '../base-components/sidebar-hamburguer'
 import { componentSelector } from "../utils/helpers/component-selector"
 
