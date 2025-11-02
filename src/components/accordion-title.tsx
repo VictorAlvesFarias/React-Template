@@ -1,5 +1,6 @@
-import AccordionTitleContainer, { IAccordionTitleContainerProps } from '../base-components/accordion-title'
-import { componentSelector } from "../utils/helpers/component-selector"
+import React from 'react'
+import { IAccordionTitleContainerProps, AccordionTitleContainer } from 'react-base-components'
+import { componentSelector } from "react-component-selector"
 
 const AccordionTitleVariations = {
     default: (props: IAccordionTitleContainerProps, ref: any) => {
@@ -12,6 +13,6 @@ const AccordionTitleVariations = {
     }
 }
 
-const AccordionTitle = componentSelector<keyof typeof AccordionTitleVariations, IAccordionTitleContainerProps>(AccordionTitleVariations)
+const AccordionTitle = componentSelector<keyof typeof AccordionTitleVariations, IAccordionTitleContainerProps, "className">(AccordionTitleVariations)
 
 export default AccordionTitle

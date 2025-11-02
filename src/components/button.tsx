@@ -1,5 +1,6 @@
-import ButtonContainer, { IButtonContainerProps } from '../base-components/button'
-import { componentSelector } from "../utils/helpers/component-selector"
+import React from 'react'
+import { IButtonContainerProps, ButtonContainer } from 'react-base-components'
+import { componentSelector } from "react-component-selector"
 import { LucideLoaderCircle } from "lucide-react"
 
 const buttonVariations = {
@@ -38,6 +39,6 @@ const buttonVariations = {
   }
 }
 
-const Button = componentSelector<keyof typeof buttonVariations, IButtonContainerProps>(buttonVariations)
+const Button = componentSelector<keyof typeof buttonVariations, IButtonContainerProps, "className">(buttonVariations)
 
 export default Button

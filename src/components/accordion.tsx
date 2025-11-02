@@ -1,5 +1,6 @@
-import AccordionContainer, { IAccordionContainerProps } from '../base-components/accordion'
-import { componentSelector } from "../utils/helpers/component-selector"
+import React from 'react'
+import { AccordionContainer, IAccordionContainerProps, } from 'react-base-components'
+import { componentSelector } from "react-component-selector"
 
 const AccordionVariations = {
     default: (props: IAccordionContainerProps, ref: any) => {

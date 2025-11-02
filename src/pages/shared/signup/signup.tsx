@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Link } from 'react-router-dom'
 import { LucideCheck } from 'lucide-react'
-import { AuthContext } from '../../../auth/auth-context'
+import { AuthContext } from 'react-toolkit'
 import Form from '../../../components/form';
 import Button from '../../../components/button';
 import InputRoot from '../../../components/input-root'
@@ -14,6 +14,7 @@ import Label from '../../../components/label'
 import InputText from '../../../components/input-text'
 import Section from '../../../components/section'
 import Checkbox from '../../../components/checkbox'
+import { signupService } from '../../../services/signup-service'
 
 interface LoginSchema {
   email: string
@@ -41,7 +42,7 @@ function Login() {
 
   function handleSingIn(data: any) {
     setLoading({ ...loading, login: true })
-    context.signIn(data)
+    signupService.signupPost(data)
       .then(() => {
         setLoading({ ...loading, login: false })
       })

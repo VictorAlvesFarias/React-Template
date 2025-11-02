@@ -1,5 +1,6 @@
-import DropdownOptionContainer, { IDropdownOptionContainerProps } from "../base-components/dropdown-option"
-import { componentSelector } from "../utils/helpers/component-selector"
+import React from 'react'
+import { IDropdownOptionContainerProps, DropdownOptionContainer } from 'react-base-components'
+import { componentSelector } from "react-component-selector"
 
 const optionVaritions = {
     default: (props: IDropdownOptionContainerProps) =>

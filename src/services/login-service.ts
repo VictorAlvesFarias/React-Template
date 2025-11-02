@@ -1,10 +1,30 @@
 import axios from "axios";
 import { env } from "../environment";
-import { BaseService } from "./base-service";
+import { BaseHttpService, catchErrors } from "typescript-toolkit";
+import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 
-class LoginService extends BaseService {
-  public async loginPost(data) {
+class LoginService extends BaseHttpService {
+  constructor() {
+    super(() => ({
+      config: () => ({
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${Cookies.get('accessToken') ?? ''}`
+        },
+      }),
+      then: (res) => res,
+      catch: (error) => {
+        catchErrors(error, (e, m) => {
+          toast.error(m)
+        })
+
+        return error
+      }
+    }))
+  }
+
+  public async loginPost(data: { email: string; password: string; }) {
     const result = this.post<any>({ api: env, href: "/api/account/login", params: {} }, {
       email: data.email,
       password: data.password
@@ -25,8 +45,9 @@ class LoginService extends BaseService {
 
     return result;
   }
-  public  logout() {
+  public logout() {
     const keys = Object.keys(Cookies.get())
+    
     keys.forEach(e => {
       Cookies.remove(e)
     })

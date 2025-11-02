@@ -1,5 +1,5 @@
 import React from "react"
-import { componentSelector } from "../utils/helpers/component-selector"
+import { componentSelector } from "react-component-selector"
 
 const sectionVariations = {
   default: (_: React.HTMLAttributes<HTMLDivElement>) =>

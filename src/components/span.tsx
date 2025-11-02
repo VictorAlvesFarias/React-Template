@@ -1,4 +1,4 @@
-import { componentSelector } from "../utils/helpers/component-selector"
+import { componentSelector } from "react-component-selector"
 import React from "react"
 
 const spanVariations = {

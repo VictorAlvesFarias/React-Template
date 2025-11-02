@@ -1,8 +1,8 @@
 import React from "react"
-import { componentSelector } from "../utils/helpers/component-selector"
+import { componentSelector } from "react-component-selector"
 
 const rootVariations = {
-    default: (props: React.HTMLAttributes<HTMLDivElement>, ref) =>
+    default: (props: React.HTMLAttributes<HTMLDivElement>, ref: any) =>
         <nav {...props} ref={ref} className="flex flex-col md:flex-row w-screen h-screen " />
 }
 
